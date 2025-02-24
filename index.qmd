@@ -1,0 +1,39 @@
+---
+title: "MainTitle"
+author: "hoyongj"
+format: html
+date: now
+knitr:
+  opts_chunk:
+    error: true
+---
+
+## 1.
+
+
+```{r}
+#| eval: false
+#| include: true
+title: "MainTitle"
+subtitle: "SubTitle"
+author: "YourName"
+format: html
+date: now
+knitr:
+  opts_chunk:
+    error: true
+```
+
+
+## 2.
+
+```{r}
+undefined_function()
+```
+
+## 3.
+
+```{r}
+1+1
+```
+
