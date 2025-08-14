@@ -1,6 +1,3 @@
-Here’s the **definition summary** for your uploaded Week 10 slides, focusing only on definitions and key concepts without previous week’s material:
-
----
 
 ## **AVL Trees**
 
@@ -63,6 +60,3 @@ Here’s the **definition summary** for your uploaded Week 10 slides, focusing o
 * **Performance**:
   Height is $O(\log n)$. Search, insert, remove visit $O(\log n)$ nodes. Split/transfer/fusion are $O(1)$.
 
----
-
-Do you want me to also make a **side-by-side comparison table** of AVL Trees vs (2,4) Trees so you can quickly see their differences? That would make revision much faster.

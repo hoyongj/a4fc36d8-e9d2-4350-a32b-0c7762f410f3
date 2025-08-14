@@ -1,6 +1,3 @@
-Here’s your **Week 1 CMPT 225 Key Definitions** organized in markdown for quick review:
-
----
 
 # 📚 CMPT 225 – Week 1 Key Definitions
 
@@ -117,6 +114,3 @@ Here’s your **Week 1 CMPT 225 Key Definitions** organized in markdown for quic
   * **Public**: Accessible from outside the class.
   * **Private**: Accessible only from within the class.
 
----
-
-Do you want me to **merge future weeks’ notes into this same growing definition sheet** so you end up with a single full-semester final review document? That would make studying much faster.

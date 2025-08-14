@@ -1,6 +1,3 @@
-Here’s a **definition summary** of the two uploaded week 4 files, keeping only the concepts introduced in them and avoiding any previous week content:
-
----
 
 ## **Algorithm Analysis & Big-O**
 
@@ -49,6 +46,3 @@ Here’s a **definition summary** of the two uploaded week 4 files, keeping only
   * Browser back button.
   * Parsing/matching symbols (e.g., parentheses).
 
----
-
-If you want, I can also make you a **condensed one-page quick reference sheet** from this so it’s faster to study. That would turn this into a very compact exam-ready handout.

@@ -1,7 +1,3 @@
-Here’s the **Week 13 Definition Summary** for your CMPT 225 review:
-
----
-
 # CMPT 225 – Week 13: Minimum Spanning Trees & Sets
 
 ## **Spanning Tree**
@@ -79,6 +75,3 @@ Here’s the **Week 13 Definition Summary** for your CMPT 225 review:
 * Require **ordered containers** with iterators.
 * Since C++17: `.merge()` method for sets.
 
----
-
-Do you want me to now **compile all 13 weeks of definition summaries into a single master markdown file** for your CMPT 225 final review? That way you’ll have one complete, organized study sheet.

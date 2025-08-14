@@ -1,6 +1,3 @@
-Here’s the **Week 5 – CMPT 225 Key Definitions** summary from your uploaded files:
-
----
 
 # 📚 CMPT 225 – Week 5 Key Definitions
 
@@ -98,6 +95,3 @@ Here’s the **Week 5 – CMPT 225 Key Definitions** summary from your uploaded 
   * **random-access iterator** – Supports jumps (p + i).
 * **STL Examples**: `vector`, `deque`, `list`.
 
----
-
-Do you want me to also make **a time complexity comparison table** for queues, deques, and vectors from this week’s notes so it’s faster to memorize? That would make it very exam-friendly.

@@ -1,6 +1,3 @@
-Here’s the **Week 12 Definition Summary** based on your uploaded files:
-
----
 
 # CMPT 225 – Week 12: Graphs Definition Summary
 
@@ -93,6 +90,3 @@ Here’s the **Week 12 Definition Summary** based on your uploaded files:
   * Relaxing all edges: $O(m \log n)$
   * Connected graph: $O(m \log n)$
 
----
-
-Do you want me to **merge all weeks so far (Week 1–12) into a single master markdown sheet** after we finish Week 13? That way, you’ll have one clean document with all CMPT 225 definitions.

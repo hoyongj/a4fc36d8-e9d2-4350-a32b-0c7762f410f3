@@ -1,6 +1,3 @@
-Here’s the **Week 7 – CMPT 225 Key Definitions** from your uploaded file:
-
----
 
 # 📚 CMPT 225 – Week 7 Key Definitions
 
@@ -93,6 +90,3 @@ Here’s the **Week 7 – CMPT 225 Key Definitions** from your uploaded file:
   * Replace with internal node containing the key.
   * Add two external children.
 
----
-
-Do you also want me to **extend this Week 7 summary** with a **table of BST operation time complexities** for best, average, and worst cases? That would make it more exam-ready.

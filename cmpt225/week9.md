@@ -1,6 +1,3 @@
-Here’s the **Week 9 – CMPT 225 Definition Summary** from your uploaded files:
-
----
 
 # 📚 CMPT 225 – Week 9 Key Definitions
 
@@ -75,6 +72,3 @@ Here’s the **Week 9 – CMPT 225 Definition Summary** from your uploaded files
   * Depth Property – All external nodes at same depth.
 * **Balanced** – No rotations needed.
 
----
-
-Do you want me to also add **small visual mnemonics** in the markdown so you can quickly recall the structure of Skip Lists, AVL Trees, and (2,4) Trees during the exam? That could speed up your memorization.

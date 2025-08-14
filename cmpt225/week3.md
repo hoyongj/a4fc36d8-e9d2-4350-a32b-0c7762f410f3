@@ -1,6 +1,3 @@
-Here’s the **Week 3 – CMPT 225 Key Definitions** based on your uploaded lecture notes:
-
----
 
 # 📚 CMPT 225 – Week 3 Key Definitions
 
@@ -131,6 +128,3 @@ Here’s the **Week 3 – CMPT 225 Key Definitions** based on your uploaded lect
   * Summation.
   * Linked list algorithms (e.g., recursive delete).
 
----
-
-Do you want me to also **include diagrams and time complexity tables** for arrays, vectors, and linked list operations in this summary so it becomes more exam-ready? That would make it a stronger quick-reference sheet.

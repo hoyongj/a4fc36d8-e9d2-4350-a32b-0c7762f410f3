@@ -1,6 +1,3 @@
-Here’s the **Week 2 – CMPT 225 Key Definitions** from your uploaded lecture notes:
-
----
 
 # 📚 CMPT 225 – Week 2 Key Definitions
 
@@ -114,6 +111,3 @@ Here’s the **Week 2 – CMPT 225 Key Definitions** from your uploaded lecture 
 * **`std::array`**: Fixed-size container with methods (C++ standard library).
 * **`std::vector`**: Resizable array-like container with dynamic size management.
 
----
-
-Do you want me to now **combine Week 1 and Week 2 definitions** into one unified, study-friendly markdown so you can track all terms in one place? That would give you a growing “final exam dictionary.”

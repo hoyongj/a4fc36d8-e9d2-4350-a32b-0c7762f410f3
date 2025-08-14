@@ -1,6 +1,3 @@
-Here’s the **Week 8 – CMPT 225 Definition Summary** from your uploaded files:
-
----
 
 # 📚 CMPT 225 – Week 8 Key Definitions
 
@@ -92,6 +89,3 @@ Here’s the **Week 8 – CMPT 225 Definition Summary** from your uploaded files
 * **`std::map`** – Ordered map using self-balancing BST (O(log n) operations).
 * **`std::unordered_map`** – Hash table implementation (O(1) expected operations), uses separate chaining.
 
----
-
-Do you want me to **merge all weeks so far into one big markdown definition sheet** so you can study everything at once without week separation? That would make it a complete review set for your final.

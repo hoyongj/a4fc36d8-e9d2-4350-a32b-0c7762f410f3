@@ -1,6 +1,3 @@
-Here’s the **definition summary** for the uploaded **Week 6** files, without including any previous weeks’ content:
-
----
 
 ## **Iterators**
 
@@ -76,6 +73,3 @@ Given height `h`, nodes `n`, external nodes `e`, internal nodes `i`:
 * **Max internal nodes**: `i ≤ 2^h - 1`
 * **Height range**: `log₂(n+1) - 1 ≤ h ≤ n - 1`
 
----
-
-Do you want me to also make **a compact table version** of this so it’s easy to revise? That would make it even quicker to study.
