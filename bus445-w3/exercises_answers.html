@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Tutorial 2 Exercises Answers</title>
+<title>Bus 445 - Tutorial 2 Exercises</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -70,6 +70,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="exercises_answers_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="exercises_answers_files/libs/bootstrap/bootstrap-81267100e462c21b3d6c0d5bf76a3417.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -81,12 +110,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#setup-and-data-loading" id="toc-setup-and-data-loading" class="nav-link active" data-scroll-target="#setup-and-data-loading">Setup and Data Loading</a></li>
-  <li><a href="#exercise-4.5.7.-skill-interpreting-boxplots" id="toc-exercise-4.5.7.-skill-interpreting-boxplots" class="nav-link" data-scroll-target="#exercise-4.5.7.-skill-interpreting-boxplots">1. Exercise 4.5.7. Skill: Interpreting BoxPlots</a></li>
-  <li><a href="#exercise-4.5.8.-skill-interpreting-scatterplots" id="toc-exercise-4.5.8.-skill-interpreting-scatterplots" class="nav-link" data-scroll-target="#exercise-4.5.8.-skill-interpreting-scatterplots">2. Exercise 4.5.8. Skill: Interpreting Scatterplots</a></li>
-  <li><a href="#exercise-4.5.10-4.5.11.-interpreting-regression-output" id="toc-exercise-4.5.10-4.5.11.-interpreting-regression-output" class="nav-link" data-scroll-target="#exercise-4.5.10-4.5.11.-interpreting-regression-output">3. Exercise 4.5.10 &amp; 4.5.11. Interpreting Regression output</a></li>
-  <li><a href="#exercise-4.5.14-skill-interpreting-regression-models" id="toc-exercise-4.5.14-skill-interpreting-regression-models" class="nav-link" data-scroll-target="#exercise-4.5.14-skill-interpreting-regression-models">5. Exercise 4.5.14: Skill: Interpreting Regression Models</a></li>
-  <li><a href="#exercise-4.5.15.-skill-building-a-good-model." id="toc-exercise-4.5.15.-skill-building-a-good-model." class="nav-link" data-scroll-target="#exercise-4.5.15.-skill-building-a-good-model.">6. Exercise 4.5.15. Skill: Building a good model.</a></li>
+  <li><a href="#tutorial-setup" id="toc-tutorial-setup" class="nav-link active" data-scroll-target="#tutorial-setup">🛠️ Tutorial Setup</a></li>
+  <li><a href="#phase-1-data-visualization" id="toc-phase-1-data-visualization" class="nav-link" data-scroll-target="#phase-1-data-visualization">📊 Phase 1: Data Visualization</a>
+  <ul class="collapse">
+  <li><a href="#exercise-4.5.7-categorical-boxplots" id="toc-exercise-4.5.7-categorical-boxplots" class="nav-link" data-scroll-target="#exercise-4.5.7-categorical-boxplots">Exercise 4.5.7: Categorical Boxplots</a></li>
+  <li><a href="#exercise-4.5.8-scatterplot-matrix" id="toc-exercise-4.5.8-scatterplot-matrix" class="nav-link" data-scroll-target="#exercise-4.5.8-scatterplot-matrix">Exercise 4.5.8: Scatterplot Matrix</a></li>
+  </ul></li>
+  <li><a href="#phase-2-linear-regression-interpretation" id="toc-phase-2-linear-regression-interpretation" class="nav-link" data-scroll-target="#phase-2-linear-regression-interpretation">📈 Phase 2: Linear Regression &amp; Interpretation</a>
+  <ul class="collapse">
+  <li><a href="#exercise-4.5.10-interpreting-continuous-predictors" id="toc-exercise-4.5.10-interpreting-continuous-predictors" class="nav-link" data-scroll-target="#exercise-4.5.10-interpreting-continuous-predictors">Exercise 4.5.10: Interpreting Continuous Predictors</a></li>
+  <li><a href="#exercise-4.5.11-describing-seasonal-patterns" id="toc-exercise-4.5.11-describing-seasonal-patterns" class="nav-link" data-scroll-target="#exercise-4.5.11-describing-seasonal-patterns">Exercise 4.5.11: Describing Seasonal Patterns</a></li>
+  </ul></li>
+  <li><a href="#phase-3-nonlinear-modeling-comparison" id="toc-phase-3-nonlinear-modeling-comparison" class="nav-link" data-scroll-target="#phase-3-nonlinear-modeling-comparison">🧬 Phase 3: Nonlinear Modeling &amp; Comparison</a>
+  <ul class="collapse">
+  <li><a href="#exercise-4.5.14-model-comparison" id="toc-exercise-4.5.14-model-comparison" class="nav-link" data-scroll-target="#exercise-4.5.14-model-comparison">Exercise 4.5.14: Model Comparison</a></li>
+  </ul></li>
+  <li><a href="#final-challenge-the-good-model" id="toc-final-challenge-the-good-model" class="nav-link" data-scroll-target="#final-challenge-the-good-model">🏆 Final Challenge: The “Good” Model</a>
+  <ul class="collapse">
+  <li><a href="#exercise-4.5.15-model-optimization" id="toc-exercise-4.5.15-model-optimization" class="nav-link" data-scroll-target="#exercise-4.5.15-model-optimization">Exercise 4.5.15: Model Optimization</a></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -94,7 +136,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Tutorial 2 Exercises Answers</h1>
+<h1 class="title">Bus 445 - Tutorial 2 Exercises</h1>
+<p class="subtitle lead">Chapter 4: Multiple Linear Regression</p>
 </div>
 
 
@@ -111,30 +154,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="setup-and-data-loading" class="level2">
-<h2 class="anchored" data-anchor-id="setup-and-data-loading">Setup and Data Loading</h2>
+<section id="tutorial-setup" class="level2">
+<h2 class="anchored" data-anchor-id="tutorial-setup">🛠️ Tutorial Setup</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car) <span class="co"># For checking VIF if needed, or linear hypothesis</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>egg_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"egg_data.csv"</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert categorical variables to factors</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>egg_data<span class="sc">$</span>Month <span class="ot">&lt;-</span> <span class="fu">factor</span>(egg_data<span class="sc">$</span>Month, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"April"</span>, <span class="st">"May"</span>, <span class="st">"June"</span>, <span class="st">"July"</span>, <span class="st">"August"</span>, <span class="st">"September"</span>, <span class="st">"October"</span>, <span class="st">"November"</span>, <span class="st">"December"</span>, <span class="st">"January"</span>, <span class="st">"February"</span>, <span class="st">"March"</span>)) <span class="co"># Reordering might be needed based on biological/fiscal year, but alphabetical or standard month order is fine. Let's rely on data order or standard.</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Actually, let's just convert to factor</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>egg_data <span class="ot">&lt;-</span> egg_data <span class="sc">%&gt;%</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">Month =</span> <span class="fu">factor</span>(Month, <span class="at">levels =</span> <span class="fu">unique</span>(Month)),</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">First.Week =</span> <span class="fu">factor</span>(First.Week),</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">Easter =</span> <span class="fu">factor</span>(Easter)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(egg_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install/Load required packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(effects)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forcats)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2) <span class="co"># Added for potential ggplot usage, though base/car plots are used below</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Source local functions</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure BCA_functions_source_file.R is in the working directory</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"BCA_functions_source_file.R"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Load Data</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># stringsAsFactors = TRUE is recommended by the tutorial guide for this dataset</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>Eggs <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"egg_data.csv"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect structure</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(Eggs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   105 obs. of  10 variables:
  $ Week      : int  1 2 3 4 5 6 7 8 9 10 ...
- $ Month     : Factor w/ 12 levels "July","August",..: 1 1 1 2 2 2 2 2 3 3 ...
+ $ Month     : Factor w/ 12 levels "April","August",..: 6 6 6 2 2 2 2 2 12 12 ...
  $ First.Week: Factor w/ 2 levels "No","Yes": 1 1 1 1 2 1 1 1 2 1 ...
  $ Easter    : Factor w/ 4 levels "Easter","Non Easter",..: 2 2 2 2 2 2 2 2 2 2 ...
  $ Cases     : int  96343 96345 96928 93519 99032 91539 89969 90859 99697 88350 ...
@@ -146,17 +189,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="exercise-4.5.7.-skill-interpreting-boxplots" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-4.5.7.-skill-interpreting-boxplots">1. Exercise 4.5.7. Skill: Interpreting BoxPlots</h2>
-<p><strong>Question:</strong> Starting with the categorical variables, create a box plot of Cases for different levels of the variable First.Week.</p>
+<section id="phase-1-data-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="phase-1-data-visualization">📊 Phase 1: Data Visualization</h2>
+<section id="exercise-4.5.7-categorical-boxplots" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-4.5.7-categorical-boxplots">Exercise 4.5.7: Categorical Boxplots</h3>
+<p><strong>Task:</strong> Create a boxplot of <code>Cases</code> (target) for different levels of the <code>First.Week</code> variable.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot of Cases by First.Week</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(egg_data, <span class="fu">aes</span>(<span class="at">x =</span> First.Week, <span class="at">y =</span> Cases)) <span class="sc">+</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Boxplot of Egg Cases by First Week Status"</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"First Week of Month"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Cases sold"</span>) <span class="sc">+</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Cases <span class="sc">~</span> First.Week, <span class="at">data =</span> Eggs, </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Egg Sales: First Week vs. Other Weeks"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Cases Sold"</span>, </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Is it the First Week?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -164,8 +207,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary statistics to help answer the question</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>egg_data <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary statistics for analysis</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Eggs <span class="sc">%&gt;%</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(First.Week) <span class="sc">%&gt;%</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Median =</span> <span class="fu">median</span>(Cases),</span>
@@ -181,54 +224,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="exercise-4.5.8.-skill-interpreting-scatterplots" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-4.5.8.-skill-interpreting-scatterplots">2. Exercise 4.5.8. Skill: Interpreting Scatterplots</h2>
-<p><strong>Question:</strong> Identify any other variables that might be related to Egg Case sales using scatterplots.</p>
+<section id="exercise-4.5.8-scatterplot-matrix" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-4.5.8-scatterplot-matrix">Exercise 4.5.8: Scatterplot Matrix</h3>
+<p><strong>Task:</strong> Generate a scatterplot matrix for all continuous variables: <code>Beef.Pr</code>, <code>Cases</code>, <code>Cereal.Pr</code>, <code>Chicken.Pr</code>, <code>Egg.Pr</code>, <code>Pork.Pr</code>, and <code>Week</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatterplots for continuous variables</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>continuous_vars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Egg.Pr"</span>, <span class="st">"Beef.Pr"</span>, <span class="st">"Pork.Pr"</span>, <span class="st">"Chicken.Pr"</span>, <span class="st">"Cereal.Pr"</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Pivot longer to plot all at once using facets</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>egg_data <span class="sc">%&gt;%</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Cases, <span class="fu">all_of</span>(continuous_vars)) <span class="sc">%&gt;%</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>Cases, <span class="at">names_to =</span> <span class="st">"Variable"</span>, <span class="at">values_to =</span> <span class="st">"Value"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Value, <span class="at">y =</span> Cases)) <span class="sc">+</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Variable, <span class="at">scales =</span> <span class="st">"free_x"</span>) <span class="sc">+</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Scatterplots of Cases vs Price Variables"</span>,</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Cases sold"</span>) <span class="sc">+</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-ℹ Please use `linewidth` instead.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatterplot Matrix using 'car' package</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">scatterplotMatrix</span>(<span class="sc">~</span> Beef.Pr <span class="sc">+</span> Cases <span class="sc">+</span> Cereal.Pr <span class="sc">+</span> Chicken.Pr <span class="sc">+</span> Egg.Pr <span class="sc">+</span> Pork.Pr <span class="sc">+</span> Week, </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> Eggs, </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">main =</span> <span class="st">"Scatterplot Matrix of Egg Sales and Prices"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="exercises_answers_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="exercises_answers_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="exercise-4.5.10-4.5.11.-interpreting-regression-output" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-4.5.10-4.5.11.-interpreting-regression-output">3. Exercise 4.5.10 &amp; 4.5.11. Interpreting Regression output</h2>
-<p><strong>Question (4.5.10):</strong> Fit a regression model and interpret coefficients for continuous variables. <strong>Question (4.5.11):</strong> Describe the seasonal pattern of egg sales (for the “Month” variable only).</p>
+</section>
+<section id="phase-2-linear-regression-interpretation" class="level2">
+<h2 class="anchored" data-anchor-id="phase-2-linear-regression-interpretation">📈 Phase 2: Linear Regression &amp; Interpretation</h2>
+<section id="exercise-4.5.10-interpreting-continuous-predictors" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-4.5.10-interpreting-continuous-predictors">Exercise 4.5.10: Interpreting Continuous Predictors</h3>
+<p><strong>Task:</strong> Estimate a linear model (<code>LinearEggs</code>) using <code>Cases</code> as the target and include all variables except <code>Week</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fitting the LinearEggs model</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># We include all potential predictors mentioned.</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>LinearEggs <span class="ot">&lt;-</span> <span class="fu">lm</span>(Cases <span class="sc">~</span> Month <span class="sc">+</span> First.Week <span class="sc">+</span> Easter <span class="sc">+</span> Egg.Pr <span class="sc">+</span> Beef.Pr <span class="sc">+</span> Pork.Pr <span class="sc">+</span> Chicken.Pr <span class="sc">+</span> Cereal.Pr, <span class="at">data =</span> egg_data)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(LinearEggs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit Linear Model (excluding Week)</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>LinearEggs <span class="ot">&lt;-</span> <span class="fu">lm</span>(Cases <span class="sc">~</span> . <span class="sc">-</span> Week, <span class="at">data =</span> Eggs)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary of the model</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(LinearEggs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = Cases ~ Month + First.Week + Easter + Egg.Pr + Beef.Pr + 
-    Pork.Pr + Chicken.Pr + Cereal.Pr, data = egg_data)
+lm(formula = Cases ~ . - Week, data = Eggs)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
@@ -236,18 +264,18 @@ Residuals:
 
 Coefficients:
                    Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)       227275.74   25787.93   8.813 1.41e-13 ***
-MonthAugust        -3896.94    2646.91  -1.472 0.144687    
-MonthSeptember      2735.18    3002.80   0.911 0.364967    
-MonthOctober        1924.04    3010.69   0.639 0.524517    
-MonthNovember       7999.26    2919.03   2.740 0.007495 ** 
-MonthDecember      12974.88    2990.44   4.339 3.97e-05 ***
-MonthJanuary       11647.59    2631.78   4.426 2.87e-05 ***
-MonthFebruary       9098.47    2972.44   3.061 0.002962 ** 
-MonthMarch          8032.82    3095.82   2.595 0.011169 *  
-MonthApril          1152.35    3422.29   0.337 0.737168    
-MonthMay           -1083.02    2859.62  -0.379 0.705845    
-MonthJune           1836.22    2812.71   0.653 0.515649    
+(Intercept)       228428.09   26290.78   8.689 2.51e-13 ***
+MonthAugust        -5049.29    3613.21  -1.397 0.165958    
+MonthDecember      11822.53    3499.29   3.379 0.001107 ** 
+MonthFebruary       7946.12    3496.05   2.273 0.025586 *  
+MonthJanuary       10495.24    3413.45   3.075 0.002843 ** 
+MonthJuly          -1152.35    3422.29  -0.337 0.737168    
+MonthJune            683.87    3482.62   0.196 0.844797    
+MonthMarch          6880.47    3402.38   2.022 0.046333 *  
+MonthMay           -2235.37    3354.27  -0.666 0.506966    
+MonthNovember       6846.91    3666.56   1.867 0.065335 .  
+MonthOctober         771.69    3757.19   0.205 0.837764    
+MonthSeptember      1582.83    3717.59   0.426 0.671367    
 First.WeekYes       5590.40    1396.16   4.004 0.000134 ***
 EasterNon Easter  -73067.62    5274.35 -13.853  &lt; 2e-16 ***
 EasterPost Easter -90180.71    6191.21 -14.566  &lt; 2e-16 ***
@@ -266,51 +294,118 @@ F-statistic: 28.74 on 20 and 84 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="exercise-4.5.14-skill-interpreting-regression-models" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-4.5.14-skill-interpreting-regression-models">5. Exercise 4.5.14: Skill: Interpreting Regression Models</h2>
-<p><strong>Question:</strong> Compare the results of the two estimated models.</p>
-<p><em>Note: The instruction implies a second model to compare against. A common comparison in demand analysis is a log-log model (Constant Elasticity Model).</em></p>
+<section id="exercise-4.5.11-describing-seasonal-patterns" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-4.5.11-describing-seasonal-patterns">Exercise 4.5.11: Describing Seasonal Patterns</h3>
+<p><strong>Task:</strong> Relevel the <code>Month</code> and <code>Easter</code> factors to have chronological order and a logical base case (e.g., “January” and “Non Easter”).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fitting a Log-Log model for comparison</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: Log transform continuous variables. </span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># For categorical variables, they remain as factors in the regression (dummy variables)</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>LogEggs <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Cases) <span class="sc">~</span> Month <span class="sc">+</span> First.Week <span class="sc">+</span> Easter <span class="sc">+</span> <span class="fu">log</span>(Egg.Pr) <span class="sc">+</span> <span class="fu">log</span>(Beef.Pr) <span class="sc">+</span> <span class="fu">log</span>(Pork.Pr) <span class="sc">+</span> <span class="fu">log</span>(Chicken.Pr) <span class="sc">+</span> <span class="fu">log</span>(Cereal.Pr), <span class="at">data =</span> egg_data)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(LogEggs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check current levels</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(Eggs<span class="sc">$</span>Month)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "April"     "August"    "December"  "February"  "January"   "July"     
+ [7] "June"      "March"     "May"       "November"  "October"   "September"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Relevel Month to chronological order</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>Eggs<span class="sc">$</span>Month <span class="ot">&lt;-</span> <span class="fu">factor</span>(Eggs<span class="sc">$</span>Month, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"January"</span>, <span class="st">"February"</span>, <span class="st">"March"</span>, <span class="st">"April"</span>, <span class="st">"May"</span>, <span class="st">"June"</span>, <span class="st">"July"</span>, <span class="st">"August"</span>, <span class="st">"September"</span>, <span class="st">"October"</span>, <span class="st">"November"</span>, <span class="st">"December"</span>))</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Relevel Easter to set "Non Easter" as reference</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: stringsAsFactors=TRUE likely made "Easter" and "Non Easter" levels. </span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>Eggs<span class="sc">$</span>Easter <span class="ot">&lt;-</span> <span class="fu">relevel</span>(Eggs<span class="sc">$</span>Easter, <span class="at">ref =</span> <span class="st">"Non Easter"</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Refit the model with releveled factors to interpret seasonal patterns correctly</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>LinearEggs_Releveled <span class="ot">&lt;-</span> <span class="fu">lm</span>(Cases <span class="sc">~</span> . <span class="sc">-</span> Week, <span class="at">data =</span> Eggs)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(LinearEggs_Releveled)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Cases ~ . - Week, data = Eggs)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-10587.2  -3413.4    195.9   3204.6  14953.0 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       165855.71   26796.27   6.190 2.12e-08 ***
+MonthFebruary      -2549.12    2816.69  -0.905 0.368050    
+MonthMarch         -3614.77    2946.54  -1.227 0.223331    
+MonthApril        -10495.24    3413.45  -3.075 0.002843 ** 
+MonthMay          -12730.61    2908.14  -4.378 3.43e-05 ***
+MonthJune          -9811.37    2911.22  -3.370 0.001137 ** 
+MonthJuly         -11647.59    2631.78  -4.426 2.87e-05 ***
+MonthAugust       -15544.53    2793.86  -5.564 3.08e-07 ***
+MonthSeptember     -8912.41    2876.59  -3.098 0.002648 ** 
+MonthOctober       -9723.55    2835.23  -3.430 0.000939 ***
+MonthNovember      -3648.33    2776.16  -1.314 0.192368    
+MonthDecember       1327.28    2867.30   0.463 0.644630    
+First.WeekYes       5590.40    1396.16   4.004 0.000134 ***
+EasterEaster       73067.62    5274.35  13.853  &lt; 2e-16 ***
+EasterPost Easter -17113.09    4970.42  -3.443 0.000899 ***
+EasterPre Easter   29548.19    4630.88   6.381 9.19e-09 ***
+Egg.Pr              -452.62     113.72  -3.980 0.000146 ***
+Beef.Pr              283.38      96.36   2.941 0.004229 ** 
+Pork.Pr              -27.75      46.34  -0.599 0.550839    
+Chicken.Pr          -149.18     159.94  -0.933 0.353622    
+Cereal.Pr           -387.13     169.61  -2.282 0.024989 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 5691 on 84 degrees of freedom
+Multiple R-squared:  0.8725,    Adjusted R-squared:  0.8421 
+F-statistic: 28.74 on 20 and 84 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="phase-3-nonlinear-modeling-comparison" class="level2">
+<h2 class="anchored" data-anchor-id="phase-3-nonlinear-modeling-comparison">🧬 Phase 3: Nonlinear Modeling &amp; Comparison</h2>
+<section id="exercise-4.5.14-model-comparison" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-4.5.14-model-comparison">Exercise 4.5.14: Model Comparison</h3>
+<p><strong>Task:</strong> Compare your original <code>LinearEggs</code> model with a new power function model (<code>LinearEggs2</code>) created by log-transforming all continuous variables.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit Log-Log Model (LinearEggs2)</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># We log transform continuous variables: Cases, Egg.Pr, Beef.Pr, Pork.Pr, Chicken.Pr, Cereal.Pr</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Categorical variables (Month, First.Week, Easter) are NOT logged.</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>LinearEggs2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Cases) <span class="sc">~</span> Month <span class="sc">+</span> First.Week <span class="sc">+</span> Easter <span class="sc">+</span> </span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">log</span>(Egg.Pr) <span class="sc">+</span> <span class="fu">log</span>(Beef.Pr) <span class="sc">+</span> <span class="fu">log</span>(Pork.Pr) <span class="sc">+</span> </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">log</span>(Chicken.Pr) <span class="sc">+</span> <span class="fu">log</span>(Cereal.Pr), </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> Eggs)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(LinearEggs2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
 lm(formula = log(Cases) ~ Month + First.Week + Easter + log(Egg.Pr) + 
     log(Beef.Pr) + log(Pork.Pr) + log(Chicken.Pr) + log(Cereal.Pr), 
-    data = egg_data)
+    data = Eggs)
 
 Residuals:
       Min        1Q    Median        3Q       Max 
 -0.105663 -0.034655  0.002429  0.033641  0.122362 
 
 Coefficients:
-                   Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)       14.321871   1.173468  12.205  &lt; 2e-16 ***
-MonthAugust       -0.039304   0.025174  -1.561  0.12221    
-MonthSeptember     0.031821   0.028418   1.120  0.26601    
-MonthOctober       0.025145   0.028512   0.882  0.38035    
-MonthNovember      0.084414   0.027553   3.064  0.00294 ** 
-MonthDecember      0.132035   0.028340   4.659 1.18e-05 ***
-MonthJanuary       0.115081   0.024994   4.604 1.46e-05 ***
-MonthFebruary      0.093028   0.028287   3.289  0.00147 ** 
-MonthMarch         0.083925   0.029477   2.847  0.00554 ** 
-MonthApril         0.004209   0.032603   0.129  0.89758    
-MonthMay          -0.011390   0.027071  -0.421  0.67502    
-MonthJune          0.020852   0.026656   0.782  0.43625    
-First.WeekYes      0.055838   0.013274   4.207 6.46e-05 ***
-EasterNon Easter  -0.528155   0.050600 -10.438  &lt; 2e-16 ***
-EasterPost Easter -0.722245   0.059292 -12.181  &lt; 2e-16 ***
-EasterPre Easter  -0.265924   0.060546  -4.392 3.25e-05 ***
-log(Egg.Pr)       -0.426656   0.101140  -4.218 6.18e-05 ***
-log(Beef.Pr)       0.391349   0.135200   2.895  0.00484 ** 
-log(Pork.Pr)      -0.031385   0.069365  -0.452  0.65210    
-log(Chicken.Pr)   -0.061250   0.098859  -0.620  0.53722    
-log(Cereal.Pr)    -0.408997   0.187636  -2.180  0.03208 *  
+                  Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       13.90880    1.18826  11.705  &lt; 2e-16 ***
+MonthFebruary     -0.02205    0.02681  -0.823 0.413119    
+MonthMarch        -0.03116    0.02806  -1.110 0.270009    
+MonthApril        -0.11087    0.03241  -3.421 0.000966 ***
+MonthMay          -0.12647    0.02756  -4.588 1.55e-05 ***
+MonthJune         -0.09423    0.02759  -3.416 0.000983 ***
+MonthJuly         -0.11508    0.02499  -4.604 1.46e-05 ***
+MonthAugust       -0.15438    0.02661  -5.802 1.13e-07 ***
+MonthSeptember    -0.08326    0.02734  -3.046 0.003102 ** 
+MonthOctober      -0.08994    0.02704  -3.326 0.001308 ** 
+MonthNovember     -0.03067    0.02636  -1.164 0.247888    
+MonthDecember      0.01695    0.02723   0.623 0.535248    
+First.WeekYes      0.05584    0.01327   4.207 6.46e-05 ***
+EasterEaster       0.52815    0.05060  10.438  &lt; 2e-16 ***
+EasterPost Easter -0.19409    0.04712  -4.119 8.86e-05 ***
+EasterPre Easter   0.26223    0.04401   5.958 5.77e-08 ***
+log(Egg.Pr)       -0.42666    0.10114  -4.218 6.18e-05 ***
+log(Beef.Pr)       0.39135    0.13520   2.895 0.004836 ** 
+log(Pork.Pr)      -0.03139    0.06936  -0.452 0.652098    
+log(Chicken.Pr)   -0.06125    0.09886  -0.620 0.537223    
+log(Cereal.Pr)    -0.40900    0.18764  -2.180 0.032076 *  
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -318,22 +413,38 @@ Residual standard error: 0.05409 on 84 degrees of freedom
 Multiple R-squared:  0.8396,    Adjusted R-squared:  0.8014 
 F-statistic: 21.99 on 20 and 84 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare Adjusted R-squared</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: R-squared values between log-linear and linear models are not directly comparable </span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># without careful interpretation, but we can look at fit quality.</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Adjusted R2 (Linear):"</span>, <span class="fu">summary</span>(LinearEggs_Releveled)<span class="sc">$</span>adj.r.squared, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Adjusted R2 (Linear): 0.8421355 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Adjusted R2 (Log-Log):"</span>, <span class="fu">summary</span>(LinearEggs2)<span class="sc">$</span>adj.r.squared, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Adjusted R2 (Log-Log): 0.8014152 </code></pre>
+</div>
 </div>
 </section>
-<section id="exercise-4.5.15.-skill-building-a-good-model." class="level2">
-<h2 class="anchored" data-anchor-id="exercise-4.5.15.-skill-building-a-good-model.">6. Exercise 4.5.15. Skill: Building a good model.</h2>
-<p><strong>Question:</strong> Starting from the LinearEggs model… estimate a model which minimizes the number of predictor variables… but retains a fairly high R2.</p>
+</section>
+<section id="final-challenge-the-good-model" class="level2">
+<h2 class="anchored" data-anchor-id="final-challenge-the-good-model">🏆 Final Challenge: The “Good” Model</h2>
+<section id="exercise-4.5.15-model-optimization" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-4.5.15-model-optimization">Exercise 4.5.15: Model Optimization</h3>
+<p><strong>Objective:</strong> Create a model that minimizes the number of predictor variables while retaining a high <span class="math inline">\(R^2\)</span> and a high <strong>Adjusted <span class="math inline">\(R^2\)</span></strong>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Stepwise selection based on AIC</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This is an automated way to reduce variables.</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>BestModelAIC <span class="ot">&lt;-</span> <span class="fu">step</span>(LinearEggs, <span class="at">direction =</span> <span class="st">"both"</span>, <span class="at">trace =</span> <span class="dv">0</span>)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(BestModelAIC)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Strategy Checklist:</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Remove non-significant continuous predictors.</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Combine factor levels with similar effects (e.g., Months).</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Automatic Stepwise selection (First approach)</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>BestModelStep <span class="ot">&lt;-</span> <span class="fu">step</span>(LinearEggs_Releveled, <span class="at">direction =</span> <span class="st">"both"</span>, <span class="at">trace =</span> <span class="dv">0</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(BestModelStep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
 lm(formula = Cases ~ Month + First.Week + Easter + Egg.Pr + Beef.Pr + 
-    Cereal.Pr, data = egg_data)
+    Cereal.Pr, data = Eggs)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
@@ -341,22 +452,22 @@ Residuals:
 
 Coefficients:
                    Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)       213815.82   22089.59   9.679 2.04e-15 ***
-MonthAugust        -3941.32    2632.69  -1.497 0.138036    
-MonthSeptember      2794.00    2765.46   1.010 0.315175    
-MonthOctober        2323.73    2675.79   0.868 0.387578    
-MonthNovember       8290.39    2798.25   2.963 0.003943 ** 
-MonthDecember      13233.18    2891.32   4.577 1.58e-05 ***
-MonthJanuary       11674.48    2605.09   4.481 2.27e-05 ***
-MonthFebruary       9030.66    2841.23   3.178 0.002058 ** 
-MonthMarch          7974.38    2969.82   2.685 0.008698 ** 
-MonthApril          1322.08    3393.08   0.390 0.697765    
-MonthMay            -347.67    2752.90  -0.126 0.899796    
-MonthJune           2426.93    2741.98   0.885 0.378570    
+(Intercept)       151943.39   23054.99   6.590 3.36e-09 ***
+MonthFebruary      -2643.82    2744.67  -0.963 0.338120    
+MonthMarch         -3700.10    2877.32  -1.286 0.201911    
+MonthApril        -10352.40    3392.93  -3.051 0.003031 ** 
+MonthMay          -12022.15    2813.59  -4.273 4.96e-05 ***
+MonthJune          -9247.55    2833.75  -3.263 0.001580 ** 
+MonthJuly         -11674.48    2605.09  -4.481 2.27e-05 ***
+MonthAugust       -15615.80    2763.52  -5.651 2.03e-07 ***
+MonthSeptember     -8880.47    2726.56  -3.257 0.001612 ** 
+MonthOctober       -9350.75    2601.29  -3.595 0.000541 ***
+MonthNovember      -3384.09    2710.69  -1.248 0.215264    
+MonthDecember       1558.70    2816.24   0.553 0.581379    
 First.WeekYes       5501.65    1386.36   3.968 0.000149 ***
-EasterNon Easter  -73546.91    5225.91 -14.073  &lt; 2e-16 ***
-EasterPost Easter -90848.70    6075.31 -14.954  &lt; 2e-16 ***
-EasterPre Easter  -42759.04    6237.61  -6.855 1.02e-09 ***
+EasterEaster       73546.91    5225.91  14.073  &lt; 2e-16 ***
+EasterPost Easter -17301.79    4896.53  -3.533 0.000663 ***
+EasterPre Easter   30787.87    4443.50   6.929 7.32e-10 ***
 Egg.Pr              -411.67      92.04  -4.473 2.35e-05 ***
 Beef.Pr              244.65      86.02   2.844 0.005564 ** 
 Cereal.Pr           -375.48     135.79  -2.765 0.006961 ** 
@@ -367,55 +478,25 @@ Residual standard error: 5662 on 86 degrees of freedom
 Multiple R-squared:  0.8708,    Adjusted R-squared:  0.8438 
 F-statistic:  32.2 on 18 and 86 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Manual approach based on significance (p-values) from LinearEggs summary</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Removing variables with highest p-values iteratively.</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Example start:</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># summary(LinearEggs)</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify insignificant variables and remove them.</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Simplified model suggestion (example):</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># If Cereal.Pr and some Prices are insignificant, we drop them. </span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's check the result of strict stepwise selection:</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(BestModelAIC)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = Cases ~ Month + First.Week + Easter + Egg.Pr + Beef.Pr + 
-    Cereal.Pr, data = egg_data)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--10879.9  -3408.8    251.6   3639.2  15466.4 
-
-Coefficients:
-                   Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)       213815.82   22089.59   9.679 2.04e-15 ***
-MonthAugust        -3941.32    2632.69  -1.497 0.138036    
-MonthSeptember      2794.00    2765.46   1.010 0.315175    
-MonthOctober        2323.73    2675.79   0.868 0.387578    
-MonthNovember       8290.39    2798.25   2.963 0.003943 ** 
-MonthDecember      13233.18    2891.32   4.577 1.58e-05 ***
-MonthJanuary       11674.48    2605.09   4.481 2.27e-05 ***
-MonthFebruary       9030.66    2841.23   3.178 0.002058 ** 
-MonthMarch          7974.38    2969.82   2.685 0.008698 ** 
-MonthApril          1322.08    3393.08   0.390 0.697765    
-MonthMay            -347.67    2752.90  -0.126 0.899796    
-MonthJune           2426.93    2741.98   0.885 0.378570    
-First.WeekYes       5501.65    1386.36   3.968 0.000149 ***
-EasterNon Easter  -73546.91    5225.91 -14.073  &lt; 2e-16 ***
-EasterPost Easter -90848.70    6075.31 -14.954  &lt; 2e-16 ***
-EasterPre Easter  -42759.04    6237.61  -6.855 1.02e-09 ***
-Egg.Pr              -411.67      92.04  -4.473 2.35e-05 ***
-Beef.Pr              244.65      86.02   2.844 0.005564 ** 
-Cereal.Pr           -375.48     135.79  -2.765 0.006961 ** 
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 5662 on 86 degrees of freedom
-Multiple R-squared:  0.8708,    Adjusted R-squared:  0.8438 
-F-statistic:  32.2 on 18 and 86 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Manual Simplification Strategy (Example)</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the summary(LinearEggs_Releveled) output.</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># If 'Chicken.Pr' and 'Pork.Pr' are not significant (p &gt; 0.05), try removing them.</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># If 'Month' coefficients are similar for adjacent months, use fct_collapse.</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Example calculation for combining months (You should adjust groups based on data)</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Eggs &lt;- Eggs %&gt;%</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   mutate(Month_Group = fct_collapse(Month,</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co">#     "Winter" = c("December", "January", "February"),</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co">#     "Spring" = c("March", "April", "May"),</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co">#     "Summer" = c("June", "July", "August"),</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="co">#     "Fall"   = c("September", "October", "November")</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   ))</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit reduced model</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="co"># BestEggs &lt;- lm(Cases ~ Month_Group + First.Week + Easter + Egg.Pr + Beef.Pr + Cereal.Pr, data = Eggs)</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="co"># summary(BestEggs)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
+</section>
 </section>
 
 </main>
