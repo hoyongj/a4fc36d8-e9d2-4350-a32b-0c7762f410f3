@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Bus 445 - Tutorial 3 Exercises</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="exercises_answers_files/libs/clipboard/clipboard.min.js"></script>
+<script src="exercises_answers_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="exercises_answers_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="exercises_answers_files/libs/quarto-html/popper.min.js"></script>
+<script src="exercises_answers_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="exercises_answers_files/libs/quarto-html/anchor.min.js"></script>
+<link href="exercises_answers_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="exercises_answers_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="exercises_answers_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="exercises_answers_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="exercises_answers_files/libs/bootstrap/bootstrap-81267100e462c21b3d6c0d5bf76a3417.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#tutorial-setup" id="toc-tutorial-setup" class="nav-link active" data-scroll-target="#tutorial-setup">🛠️ Tutorial Setup</a></li>
+  <li><a href="#phase-1-data-exploration" id="toc-phase-1-data-exploration" class="nav-link" data-scroll-target="#phase-1-data-exploration">📊 Phase 1: Data Exploration</a>
+  <ul class="collapse">
+  <li><a href="#exercise-5.4.8-examining-predictor-relationships" id="toc-exercise-5.4.8-examining-predictor-relationships" class="nav-link" data-scroll-target="#exercise-5.4.8-examining-predictor-relationships">Exercise 5.4.8: Examining Predictor Relationships</a></li>
+  </ul></li>
+  <li><a href="#phase-2-logistic-modeling-effect-sizes" id="toc-phase-2-logistic-modeling-effect-sizes" class="nav-link" data-scroll-target="#phase-2-logistic-modeling-effect-sizes">📈 Phase 2: Logistic Modeling &amp; Effect Sizes</a>
+  <ul class="collapse">
+  <li><a href="#exercise-5.4.18-effect-size-plots" id="toc-exercise-5.4.18-effect-size-plots" class="nav-link" data-scroll-target="#exercise-5.4.18-effect-size-plots">Exercise 5.4.18: Effect Size Plots</a></li>
+  </ul></li>
+  <li><a href="#prepare-variables-for-model-mixedccs2" id="toc-prepare-variables-for-model-mixedccs2" class="nav-link" data-scroll-target="#prepare-variables-for-model-mixedccs2">1. Prepare Variables for Model MixedCCS2</a></li>
+  <li><a href="#log-transformations-adding-1-to-yearsgive-if-needed-though-not-used-in-mixedccs2." id="toc-log-transformations-adding-1-to-yearsgive-if-needed-though-not-used-in-mixedccs2." class="nav-link" data-scroll-target="#log-transformations-adding-1-to-yearsgive-if-needed-though-not-used-in-mixedccs2.">Log Transformations (Adding 1 to YearsGive if needed, though not used in MixedCCS2.</a></li>
+  <li><a href="#for-amounts-assumption-is-0-but-logx-is-standard-here." id="toc-for-amounts-assumption-is-0-but-logx-is-standard-here." class="nav-link" data-scroll-target="#for-amounts-assumption-is-0-but-logx-is-standard-here.">For amounts, assumption is &gt; 0, but log(x) is standard here.</a></li>
+  <li><a href="#tutorial-uses-log.lastdonamt-and-log.avedonamt." id="toc-tutorial-uses-log.lastdonamt-and-log.avedonamt." class="nav-link" data-scroll-target="#tutorial-uses-log.lastdonamt-and-log.avedonamt.">Tutorial uses Log.LastDonAmt and Log.AveDonAmt.</a></li>
+  <li><a href="#collapse-regions" id="toc-collapse-regions" class="nav-link" data-scroll-target="#collapse-regions">Collapse Regions</a></li>
+  <li><a href="#fit-model-mixedccs2-on-estimation-sample" id="toc-fit-model-mixedccs2-on-estimation-sample" class="nav-link" data-scroll-target="#fit-model-mixedccs2-on-estimation-sample">2. Fit Model MixedCCS2 on Estimation Sample</a></li>
+  <li><a href="#generate-effect-plots" id="toc-generate-effect-plots" class="nav-link" data-scroll-target="#generate-effect-plots">3. Generate Effect Plots</a></li>
+  <li><a href="#original-probability-scale-type-response" id="toc-original-probability-scale-type-response" class="nav-link" data-scroll-target="#original-probability-scale-type-response">(Original) Probability Scale (type = “response”)</a>
+  <ul class="collapse">
+  <li><a href="#exercise-5.4.19-managerial-description" id="toc-exercise-5.4.19-managerial-description" class="nav-link" data-scroll-target="#exercise-5.4.19-managerial-description">Exercise 5.4.19: Managerial Description</a></li>
+  <li><a href="#additional-questions" id="toc-additional-questions" class="nav-link" data-scroll-target="#additional-questions">📝 Additional Questions</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Bus 445 - Tutorial 3 Exercises</h1>
+<p class="subtitle lead">Chapter 5: Logistic Regression</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="tutorial-setup" class="level2">
+<h2 class="anchored" data-anchor-id="tutorial-setup">🛠️ Tutorial Setup</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install/Load required packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("gplots") # Uncomment if not installed</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forcats)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(effects)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gplots)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Source local functions</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure BCA_functions_source_file.R is in the working directory</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># If it is in a different folder, adjust the path (e.g., "../tutorial2/BCA_functions_source_file.R")</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">file.exists</span>(<span class="st">"BCA_functions_source_file.R"</span>)) {</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">source</span>(<span class="st">"BCA_functions_source_file.R"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span>(<span class="fu">file.exists</span>(<span class="st">"../tutorial1/BCA_functions_source_file.R"</span>)) {</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">source</span>(<span class="st">"../tutorial1/BCA_functions_source_file.R"</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">warning</span>(<span class="st">"BCA_functions_source_file.R not found. Please ensure it is available."</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Load Data</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>CCS <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file=</span><span class="st">"CCS_data.csv"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Create 50/50 Estimation and Validation samples</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Using rand.seed = 1 as per tutorial instructions</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>CCS<span class="sc">$</span>Sample <span class="ot">&lt;-</span> <span class="fu">create.samples</span>(CCS, <span class="at">est =</span> <span class="fl">0.50</span>, <span class="at">val =</span> <span class="fl">0.50</span>, <span class="at">rand.seed =</span> <span class="dv">1</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Numeric Target for Visualization (Yes=1, No=0)</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>CCS<span class="sc">$</span>MonthGive.Num <span class="ot">&lt;-</span> <span class="fu">if_else</span>(<span class="fu">as.character</span>(CCS<span class="sc">$</span>MonthGive) <span class="sc">==</span> <span class="st">"Yes"</span>, <span class="dv">1</span>, <span class="dv">0</span>) <span class="co"># Ensure char conversion for safety</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect structure</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(CCS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   1600 obs. of  22 variables:
+ $ MonthGive    : Factor w/ 2 levels "No","Yes": 2 2 2 2 2 2 2 2 2 2 ...
+ $ Region       : Factor w/ 6 levels "R1","R2","R3",..: 1 1 2 2 2 4 3 3 2 1 ...
+ $ YearsGive    : int  5 9 1 12 2 3 9 8 2 1 ...
+ $ AveDonAmt    : num  31.2 25 25 25 25 ...
+ $ LastDonAmt   : num  25 25 25 25 25 50 50 20 35 100 ...
+ $ DonPerYear   : num  0.8 0.111 2 0.583 0.5 ...
+ $ NewDonor     : Factor w/ 2 levels "No","Yes": 1 1 1 1 1 1 1 1 1 1 ...
+ $ Age20t29     : num  0.0779 0.1493 0.3211 0.2 0.22 ...
+ $ Age20t39     : num  0.201 0.289 0.587 0.4 0.54 ...
+ $ Age60pls     : num  0.143 0.154 0.128 0.229 0.23 ...
+ $ Age70pls     : num  0.0584 0.0846 0.0917 0.1429 0.16 ...
+ $ Age80pls     : num  0 0.0199 0.0367 0.0667 0.07 ...
+ $ AdultAge     : num  47.3 45.5 39.5 46.2 44.5 ...
+ $ SomeUnivP    : num  0.417 0.537 0.435 0.278 0.64 ...
+ $ FinUnivP     : num  0.1565 0.3235 0.2609 0.0972 0.4651 ...
+ $ hh1t2mem     : num  0.48 0.443 0.836 0.897 0.958 ...
+ $ hh1mem       : num  0.08 0.129 0.475 0.448 0.676 ...
+ $ AveIncEA     : num  71703 70120 28662 35419 34228 ...
+ $ DwelValEA    : num  222017 263469 0 183521 262905 ...
+ $ EngPrmLang   : num  1 0.866 0.793 0.861 0.847 ...
+ $ Sample       : chr  "Validation" "Validation" "Estimation" "Estimation" ...
+ $ MonthGive.Num: num  1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+</div>
+</div>
+</section>
+<section id="phase-1-data-exploration" class="level2">
+<h2 class="anchored" data-anchor-id="phase-1-data-exploration">📊 Phase 1: Data Exploration</h2>
+<section id="exercise-5.4.8-examining-predictor-relationships" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-5.4.8-examining-predictor-relationships">Exercise 5.4.8: Examining Predictor Relationships</h3>
+<p><strong>Task:</strong> Examine the relationship between <code>MonthGive.Num</code> and potential predictor variables: <code>LastDonAmt</code>, <code>DonPerYear</code>, and <code>YearsGive</code>. Identify any non-linear relationships.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Inspect LastDonAmt</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatterplot with Loess smooth</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">scatterplot</span>(MonthGive.Num <span class="sc">~</span> LastDonAmt, <span class="at">data =</span> CCS, <span class="at">main =</span> <span class="st">"MonthGive vs LastDonAmt"</span>, <span class="at">smooth =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="exercises_answers_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Binning for clearer mean plot if needed (Optional but helpful)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>CCS<span class="sc">$</span>LastDonAmt.Cat <span class="ot">&lt;-</span> <span class="fu">binVariable</span>(CCS<span class="sc">$</span>LastDonAmt, <span class="at">bins =</span> <span class="dv">4</span>, <span class="at">method =</span> <span class="st">"proportions"</span>, <span class="at">labels =</span> <span class="cn">NULL</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotmeans</span>(MonthGive.Num <span class="sc">~</span> LastDonAmt.Cat, <span class="at">data =</span> CCS, <span class="at">main =</span> <span class="st">"Mean MonthGive by LastDonAmt Bins"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="exercises_answers_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Inspect DonPerYear</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">scatterplot</span>(MonthGive.Num <span class="sc">~</span> DonPerYear, <span class="at">data =</span> CCS, <span class="at">main =</span> <span class="st">"MonthGive vs DonPerYear"</span>, <span class="at">smooth =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="exercises_answers_files/figure-html/unnamed-chunk-2-3.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotmeans</span>(MonthGive.Num <span class="sc">~</span> DonPerYear, <span class="at">data =</span> CCS, <span class="at">main =</span> <span class="st">"Mean MonthGive by DonPerYear"</span>) <span class="co"># DonPerYear is discrete enough</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in qt((1 + p)/2, ns - 1): NaNs produced</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped
+Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="exercises_answers_files/figure-html/unnamed-chunk-2-4.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Inspect YearsGive</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">scatterplot</span>(MonthGive.Num <span class="sc">~</span> YearsGive, <span class="at">data =</span> CCS, <span class="at">main =</span> <span class="st">"MonthGive vs YearsGive"</span>, <span class="at">smooth =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="exercises_answers_files/figure-html/unnamed-chunk-2-5.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotmeans</span>(MonthGive.Num <span class="sc">~</span> YearsGive, <span class="at">data =</span> CCS, <span class="at">main =</span> <span class="st">"Mean MonthGive by YearsGive"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in qt((1 + p)/2, ns - 1): NaNs produced</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in arrows(x, li, x, pmax(y - gap, li), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in arrows(x, ui, x, pmin(y + gap, ui), col = barcol, lwd = lwd, :
+zero-length arrow is of indeterminate angle and so skipped</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="exercises_answers_files/figure-html/unnamed-chunk-2-6.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Write your interpretation here regarding nonlinearity (concave, convex, etc.) for each variable.</em></p>
+<p><strong>Interpretation:</strong></p>
+<ul>
+<li><strong>LastDonAmt:</strong> The relationship appears to be <strong>concave</strong>. The probability of joining the monthly giving program increases as the last donation amount increases, but the rate of increase slows down for larger amounts (diminishing returns).</li>
+<li><strong>DonPerYear:</strong> The relationship typically shows an underlying positive trend. Donors who donate more frequently per year generally have a higher likelihood of joining. The shape is often <strong>concave</strong> or roughly linear in the log-odds, implying that moving from 0 to 1 donation per year has a bigger impact than moving from 5 to 6.</li>
+<li><strong>YearsGive:</strong> This relationship often appears <strong>concave</strong> or linear. Long-term donors are more likely to join, but the effect may plateau after a certain number of years.</li>
+</ul>
+</section>
+</section>
+<section id="phase-2-logistic-modeling-effect-sizes" class="level2">
+<h2 class="anchored" data-anchor-id="phase-2-logistic-modeling-effect-sizes">📈 Phase 2: Logistic Modeling &amp; Effect Sizes</h2>
+<section id="exercise-5.4.18-effect-size-plots" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-5.4.18-effect-size-plots">Exercise 5.4.18: Effect Size Plots</h3>
+<p><strong>Task:</strong> (a) Relate effect size plots to significance. (b) Rerun <code>plot(allEffects...)</code> without <code>type = "response"</code>.</p>
+<p>First, we need to recreate the <code>MixedCCS2</code> model as per the tutorial guide involving variable transformations and region collapsing.</p>
+</section>
+</section>
+<section id="prepare-variables-for-model-mixedccs2" class="level1">
+<h1>1. Prepare Variables for Model MixedCCS2</h1>
+</section>
+<section id="log-transformations-adding-1-to-yearsgive-if-needed-though-not-used-in-mixedccs2." class="level1">
+<h1>Log Transformations (Adding 1 to YearsGive if needed, though not used in MixedCCS2.</h1>
+</section>
+<section id="for-amounts-assumption-is-0-but-logx-is-standard-here." class="level1">
+<h1>For amounts, assumption is &gt; 0, but log(x) is standard here.</h1>
+</section>
+<section id="tutorial-uses-log.lastdonamt-and-log.avedonamt." class="level1">
+<h1>Tutorial uses Log.LastDonAmt and Log.AveDonAmt.</h1>
+<p>CCS<span class="math inline">\(Log.LastDonAmt &lt;- log(CCS\)</span>LastDonAmt) CCS<span class="math inline">\(Log.AveDonAmt  &lt;- log(CCS\)</span>AveDonAmt)</p>
+</section>
+<section id="collapse-regions" class="level1">
+<h1>Collapse Regions</h1>
+<p>CCS<span class="math inline">\(New.Region &lt;- fct_collapse(CCS\)</span>Region, VanFraser = c(“R2”, “R3”), Other = c(“R1”, “R4”, “R5”, “R6”))</p>
+</section>
+<section id="fit-model-mixedccs2-on-estimation-sample" class="level1">
+<h1>2. Fit Model MixedCCS2 on Estimation Sample</h1>
+<p>MixedCCS2 &lt;- glm(formula = MonthGive ~ AveIncEA + DonPerYear + Log.LastDonAmt + Log.AveDonAmt + New.Region, family = binomial(logit), data = filter(CCS, Sample == “Estimation”))</p>
+<p>summary(MixedCCS2)</p>
+</section>
+<section id="generate-effect-plots" class="level1">
+<h1>3. Generate Effect Plots</h1>
+</section>
+<section id="original-probability-scale-type-response" class="level1">
+<h1>(Original) Probability Scale (type = “response”)</h1>
+<p>plot(allEffects(MixedCCS2), type = “response”, main = “Effect Plots (Probability Scale)”)</p>
+<p><strong>Answer:</strong></p>
+<p><strong>(a) Effect Size vs.&nbsp;Significance:</strong> Even though <code>AveIncEA</code> has a large effect size (doubling the probability of joining from the lowest to highest income levels), its effect is only marginally statistically significant (high p-value). This discrepancy occurs because statistical significance depends on both the <strong>magnitude of the effect</strong> and the <strong>precision of the estimate</strong> (standard error). A*Answer:**</p>
+<p>Members of the monthly giving program can be distinguished from non-members by their giving history and location. Specifically: 1. <strong>Giving History:</strong> Members tend to be more committed donors. They have higher <strong>average donation amounts</strong> in the past and donate <strong>more frequently</strong> (higher donations per year) compared to non-members. 2. <strong>Recent Engagement:</strong> The size of their <strong>last donation</strong> is also a strong indicator; those who gave larger amounts recently are more likely to join. 3. <strong>Demographics/Location:</strong> There are geographic differences, with donors in the <strong>Vancouver/Fraser</strong> regions (R2, R3) showing different adoption rates compared to other regions. (Note: Depending on the coefficient sign, one group is more likely). 4. <strong>Income:</strong> There is a tendency for donors from areas with higher <strong>average household income</strong> to be more likely to join, though this factor is less certain than their direct giving behavior.</p>
+<p>In summary, the best prospects for the monthly program are your <strong>active, high-value donors</strong> located in key regions.n result from: 1. <strong>High variability</strong> in the data regarding the relationship. 2. <strong>Multicollinearity:</strong> <code>AveIncEA</code> might be correlated with other predictors (e.g., <code>AveDonAmt</code> or <code>Region</code>), which inflates the standard error, making it hard for the model to isolate its specific contribution with certainty. M <strong>Variables that cannot be log-transformed:</strong> Variables with <strong>zero or negative values</strong> cannot be log-transformed directly (since <span class="math inline">\(log(0)\)</span> is undefined). For example, <code>YearsGive</code> might be 0 for a brand new donor. A common workaround is to add a small constant (e.g., <span class="math inline">\(log(x + 1)\)</span>). * <strong>Appropriateness:</strong> Log-transformations are appropriate when the relationship is <strong>non-linear</strong>, specifically <strong>concave</strong> (diminishing returns) or when the variable spans several orders of magnitude (highly skewed). It helps to linearize the relationship between the predictor and the log-odds of the target.</p>
+<p><strong>b) Why would you wish to reduce the number of levels of a categorical predictor?</strong> * <strong>Parsimony:</strong> Reducing complexity makes the model easier to interpret. * <strong>Statistical Power:</strong> Some levels might have very few observations (rare categories), leading to unstable estimates (large standard errors). Combining small, similar groups increases the sample size for that category. * <strong>Overfitting:</strong> Too many levels can lead to the model fitting noise rather than the signal.</p>
+<p><strong>c) How do you decide which levels to combine?</strong> * <strong>Similar Coefficients:</strong> Combine levels that have similar estimated coefficients (effects) on the target variable. * <strong>Logical Grouping:</strong> Combine levels that make conceptual sense to group together (e.g., grouping “January”, “February”, “March” into “Winter”). * <strong>Sample Size:</strong> Merge “rare” levels into a larger “Other” category if they are too small to be statistically significant on their own.</p>
+<p><strong>d) What problems do correlated predictors cause?</strong> * <strong>Multicollinearity:</strong> When predictors are highly correlated (e.g., <code>AveDonAmt</code> and <code>LastDonAmt</code>), it becomes difficult for the model to determine the unique effect of each variable. * <strong>Inflated Standard Errors:</strong> This leads to large standard errors and wide confidence intervals. * <strong>Instability:</strong> Small changes in the data can lead to large swings in the coefficient estimates. * <strong>Misleading Significance:</strong> A variable might appear statistically insignificant (high p-value) not because it doesn’t matter, but because its effect is masked by the other correlated variable.</p>
+<p><strong>e) Management presentation strategy with correlated predictors:</strong> * <strong>Model vs.&nbsp;Insight:</strong> Use the model with both predictors for <em>prediction</em> if it performs better (higher <span class="math inline">\(R^2\)</span> or accuracy). * <strong>Presentation:</strong> When presenting to management, be careful not to imply that <em>both</em> variables are independently driving the result in an additive way if they are measuring the same underlying trait (e.g., “Generosity”). * <strong>Simplify:</strong> You might present the “stronger” or more intuitive variable as the key driver (e.g., “Past Giving Behavior”) and mention that this captures both the average and recent donation size. Or, verify if removing one drastically changes the model performance; if not, present the simpler model to management to avoid confusion. Explicitly state that these two factors move together. <em>Write your comparison and explanation here.</em></p>
+<section id="exercise-5.4.19-managerial-description" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-5.4.19-managerial-description">Exercise 5.4.19: Managerial Description</h3>
+<p><strong>Task:</strong> Describe in plain managerial English how the members of the monthly giving program differ from nonmembers.</p>
+<p><em>Write your answer here.</em></p>
+</section>
+<section id="additional-questions" class="level2">
+<h2 class="anchored" data-anchor-id="additional-questions">📝 Additional Questions</h2>
+<p><strong>a) Log transformations:</strong> <em>Answer here regarding variable types and appropriateness.</em></p>
+<p><strong>b) Reducing levels of categorical predictor:</strong> <em>Answer here.</em></p>
+<p><strong>c) Deciding which levels to combine:</strong> <em>Answer here.</em></p>
+<p><strong>d) Problems caused by correlated predictors:</strong> <em>Answer here.</em></p>
+<p><strong>e) Management presentation strategy with correlated predictors:</strong> <em>Answer here.</em></p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
