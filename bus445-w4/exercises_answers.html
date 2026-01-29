@@ -118,19 +118,9 @@ window.Quarto = {
   <li><a href="#phase-2-logistic-modeling-effect-sizes" id="toc-phase-2-logistic-modeling-effect-sizes" class="nav-link" data-scroll-target="#phase-2-logistic-modeling-effect-sizes">📈 Phase 2: Logistic Modeling &amp; Effect Sizes</a>
   <ul class="collapse">
   <li><a href="#exercise-5.4.18-effect-size-plots" id="toc-exercise-5.4.18-effect-size-plots" class="nav-link" data-scroll-target="#exercise-5.4.18-effect-size-plots">Exercise 5.4.18: Effect Size Plots</a></li>
-  </ul></li>
-  <li><a href="#prepare-variables-for-model-mixedccs2" id="toc-prepare-variables-for-model-mixedccs2" class="nav-link" data-scroll-target="#prepare-variables-for-model-mixedccs2">1. Prepare Variables for Model MixedCCS2</a></li>
-  <li><a href="#log-transformations-adding-1-to-yearsgive-if-needed-though-not-used-in-mixedccs2." id="toc-log-transformations-adding-1-to-yearsgive-if-needed-though-not-used-in-mixedccs2." class="nav-link" data-scroll-target="#log-transformations-adding-1-to-yearsgive-if-needed-though-not-used-in-mixedccs2.">Log Transformations (Adding 1 to YearsGive if needed, though not used in MixedCCS2.</a></li>
-  <li><a href="#for-amounts-assumption-is-0-but-logx-is-standard-here." id="toc-for-amounts-assumption-is-0-but-logx-is-standard-here." class="nav-link" data-scroll-target="#for-amounts-assumption-is-0-but-logx-is-standard-here.">For amounts, assumption is &gt; 0, but log(x) is standard here.</a></li>
-  <li><a href="#tutorial-uses-log.lastdonamt-and-log.avedonamt." id="toc-tutorial-uses-log.lastdonamt-and-log.avedonamt." class="nav-link" data-scroll-target="#tutorial-uses-log.lastdonamt-and-log.avedonamt.">Tutorial uses Log.LastDonAmt and Log.AveDonAmt.</a></li>
-  <li><a href="#collapse-regions" id="toc-collapse-regions" class="nav-link" data-scroll-target="#collapse-regions">Collapse Regions</a></li>
-  <li><a href="#fit-model-mixedccs2-on-estimation-sample" id="toc-fit-model-mixedccs2-on-estimation-sample" class="nav-link" data-scroll-target="#fit-model-mixedccs2-on-estimation-sample">2. Fit Model MixedCCS2 on Estimation Sample</a></li>
-  <li><a href="#generate-effect-plots" id="toc-generate-effect-plots" class="nav-link" data-scroll-target="#generate-effect-plots">3. Generate Effect Plots</a></li>
-  <li><a href="#original-probability-scale-type-response" id="toc-original-probability-scale-type-response" class="nav-link" data-scroll-target="#original-probability-scale-type-response">(Original) Probability Scale (type = “response”)</a>
-  <ul class="collapse">
   <li><a href="#exercise-5.4.19-managerial-description" id="toc-exercise-5.4.19-managerial-description" class="nav-link" data-scroll-target="#exercise-5.4.19-managerial-description">Exercise 5.4.19: Managerial Description</a></li>
-  <li><a href="#additional-questions" id="toc-additional-questions" class="nav-link" data-scroll-target="#additional-questions">📝 Additional Questions</a></li>
   </ul></li>
+  <li><a href="#additional-questions" id="toc-additional-questions" class="nav-link" data-scroll-target="#additional-questions">📝 Additional Questions</a></li>
   </ul>
 </nav>
 </div>
@@ -444,57 +434,103 @@ zero-length arrow is of indeterminate angle and so skipped</code></pre>
 <h3 class="anchored" data-anchor-id="exercise-5.4.18-effect-size-plots">Exercise 5.4.18: Effect Size Plots</h3>
 <p><strong>Task:</strong> (a) Relate effect size plots to significance. (b) Rerun <code>plot(allEffects...)</code> without <code>type = "response"</code>.</p>
 <p>First, we need to recreate the <code>MixedCCS2</code> model as per the tutorial guide involving variable transformations and region collapsing.</p>
-</section>
-</section>
-<section id="prepare-variables-for-model-mixedccs2" class="level1">
-<h1>1. Prepare Variables for Model MixedCCS2</h1>
-</section>
-<section id="log-transformations-adding-1-to-yearsgive-if-needed-though-not-used-in-mixedccs2." class="level1">
-<h1>Log Transformations (Adding 1 to YearsGive if needed, though not used in MixedCCS2.</h1>
-</section>
-<section id="for-amounts-assumption-is-0-but-logx-is-standard-here." class="level1">
-<h1>For amounts, assumption is &gt; 0, but log(x) is standard here.</h1>
-</section>
-<section id="tutorial-uses-log.lastdonamt-and-log.avedonamt." class="level1">
-<h1>Tutorial uses Log.LastDonAmt and Log.AveDonAmt.</h1>
-<p>CCS<span class="math inline">\(Log.LastDonAmt &lt;- log(CCS\)</span>LastDonAmt) CCS<span class="math inline">\(Log.AveDonAmt  &lt;- log(CCS\)</span>AveDonAmt)</p>
-</section>
-<section id="collapse-regions" class="level1">
-<h1>Collapse Regions</h1>
-<p>CCS<span class="math inline">\(New.Region &lt;- fct_collapse(CCS\)</span>Region, VanFraser = c(“R2”, “R3”), Other = c(“R1”, “R4”, “R5”, “R6”))</p>
-</section>
-<section id="fit-model-mixedccs2-on-estimation-sample" class="level1">
-<h1>2. Fit Model MixedCCS2 on Estimation Sample</h1>
-<p>MixedCCS2 &lt;- glm(formula = MonthGive ~ AveIncEA + DonPerYear + Log.LastDonAmt + Log.AveDonAmt + New.Region, family = binomial(logit), data = filter(CCS, Sample == “Estimation”))</p>
-<p>summary(MixedCCS2)</p>
-</section>
-<section id="generate-effect-plots" class="level1">
-<h1>3. Generate Effect Plots</h1>
-</section>
-<section id="original-probability-scale-type-response" class="level1">
-<h1>(Original) Probability Scale (type = “response”)</h1>
-<p>plot(allEffects(MixedCCS2), type = “response”, main = “Effect Plots (Probability Scale)”)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Prepare Variables for Model MixedCCS2</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Log Transformations (Adding 1 to YearsGive if needed, though not used in MixedCCS2. </span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># For amounts, assumption is &gt; 0, but log(x) is standard here.</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Tutorial uses Log.LastDonAmt and Log.AveDonAmt.</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>CCS<span class="sc">$</span>Log.LastDonAmt <span class="ot">&lt;-</span> <span class="fu">log</span>(CCS<span class="sc">$</span>LastDonAmt)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>CCS<span class="sc">$</span>Log.AveDonAmt  <span class="ot">&lt;-</span> <span class="fu">log</span>(CCS<span class="sc">$</span>AveDonAmt)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Collapse Regions</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>CCS<span class="sc">$</span>New.Region <span class="ot">&lt;-</span> <span class="fu">fct_collapse</span>(CCS<span class="sc">$</span>Region, </span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>                               <span class="at">VanFraser =</span> <span class="fu">c</span>(<span class="st">"R2"</span>, <span class="st">"R3"</span>), </span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>                               <span class="at">Other =</span> <span class="fu">c</span>(<span class="st">"R1"</span>, <span class="st">"R4"</span>, <span class="st">"R5"</span>, <span class="st">"R6"</span>))</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Fit Model MixedCCS2 on Estimation Sample</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>MixedCCS2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">formula =</span> MonthGive <span class="sc">~</span> AveIncEA <span class="sc">+</span> DonPerYear <span class="sc">+</span> Log.LastDonAmt <span class="sc">+</span> </span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>                 Log.AveDonAmt <span class="sc">+</span> New.Region, </span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>                 <span class="at">family =</span> <span class="fu">binomial</span>(logit), </span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> <span class="fu">filter</span>(CCS, Sample <span class="sc">==</span> <span class="st">"Estimation"</span>))</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(MixedCCS2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = MonthGive ~ AveIncEA + DonPerYear + Log.LastDonAmt + 
+    Log.AveDonAmt + New.Region, family = binomial(logit), data = filter(CCS, 
+    Sample == "Estimation"))
+
+Coefficients:
+                      Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)         -3.384e+00  4.024e-01  -8.408  &lt; 2e-16 ***
+AveIncEA            -7.442e-06  4.132e-06  -1.801  0.07169 .  
+DonPerYear           8.089e-01  1.864e-01   4.340 1.43e-05 ***
+Log.LastDonAmt       6.214e-01  2.375e-01   2.617  0.00887 ** 
+Log.AveDonAmt        4.166e-01  2.581e-01   1.614  0.10653    
+New.RegionVanFraser  4.792e-01  1.676e-01   2.859  0.00426 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1108.99  on 799  degrees of freedom
+Residual deviance:  911.96  on 794  degrees of freedom
+AIC: 923.96
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Generate Effect Plots</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># (Original) Probability Scale (type = "response")</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">allEffects</span>(MixedCCS2), <span class="at">type =</span> <span class="st">"response"</span>, <span class="at">main =</span> <span class="st">"Effect Plots (Probability Scale)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="exercises_answers_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># (b) Log-Odds Scale (default)</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">allEffects</span>(MixedCCS2), <span class="at">main =</span> <span class="st">"Effect Plots (Log-Odds Scale)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="exercises_answers_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 <p><strong>Answer:</strong></p>
-<p><strong>(a) Effect Size vs.&nbsp;Significance:</strong> Even though <code>AveIncEA</code> has a large effect size (doubling the probability of joining from the lowest to highest income levels), its effect is only marginally statistically significant (high p-value). This discrepancy occurs because statistical significance depends on both the <strong>magnitude of the effect</strong> and the <strong>precision of the estimate</strong> (standard error). A*Answer:**</p>
-<p>Members of the monthly giving program can be distinguished from non-members by their giving history and location. Specifically: 1. <strong>Giving History:</strong> Members tend to be more committed donors. They have higher <strong>average donation amounts</strong> in the past and donate <strong>more frequently</strong> (higher donations per year) compared to non-members. 2. <strong>Recent Engagement:</strong> The size of their <strong>last donation</strong> is also a strong indicator; those who gave larger amounts recently are more likely to join. 3. <strong>Demographics/Location:</strong> There are geographic differences, with donors in the <strong>Vancouver/Fraser</strong> regions (R2, R3) showing different adoption rates compared to other regions. (Note: Depending on the coefficient sign, one group is more likely). 4. <strong>Income:</strong> There is a tendency for donors from areas with higher <strong>average household income</strong> to be more likely to join, though this factor is less certain than their direct giving behavior.</p>
-<p>In summary, the best prospects for the monthly program are your <strong>active, high-value donors</strong> located in key regions.n result from: 1. <strong>High variability</strong> in the data regarding the relationship. 2. <strong>Multicollinearity:</strong> <code>AveIncEA</code> might be correlated with other predictors (e.g., <code>AveDonAmt</code> or <code>Region</code>), which inflates the standard error, making it hard for the model to isolate its specific contribution with certainty. M <strong>Variables that cannot be log-transformed:</strong> Variables with <strong>zero or negative values</strong> cannot be log-transformed directly (since <span class="math inline">\(log(0)\)</span> is undefined). For example, <code>YearsGive</code> might be 0 for a brand new donor. A common workaround is to add a small constant (e.g., <span class="math inline">\(log(x + 1)\)</span>). * <strong>Appropriateness:</strong> Log-transformations are appropriate when the relationship is <strong>non-linear</strong>, specifically <strong>concave</strong> (diminishing returns) or when the variable spans several orders of magnitude (highly skewed). It helps to linearize the relationship between the predictor and the log-odds of the target.</p>
-<p><strong>b) Why would you wish to reduce the number of levels of a categorical predictor?</strong> * <strong>Parsimony:</strong> Reducing complexity makes the model easier to interpret. * <strong>Statistical Power:</strong> Some levels might have very few observations (rare categories), leading to unstable estimates (large standard errors). Combining small, similar groups increases the sample size for that category. * <strong>Overfitting:</strong> Too many levels can lead to the model fitting noise rather than the signal.</p>
-<p><strong>c) How do you decide which levels to combine?</strong> * <strong>Similar Coefficients:</strong> Combine levels that have similar estimated coefficients (effects) on the target variable. * <strong>Logical Grouping:</strong> Combine levels that make conceptual sense to group together (e.g., grouping “January”, “February”, “March” into “Winter”). * <strong>Sample Size:</strong> Merge “rare” levels into a larger “Other” category if they are too small to be statistically significant on their own.</p>
-<p><strong>d) What problems do correlated predictors cause?</strong> * <strong>Multicollinearity:</strong> When predictors are highly correlated (e.g., <code>AveDonAmt</code> and <code>LastDonAmt</code>), it becomes difficult for the model to determine the unique effect of each variable. * <strong>Inflated Standard Errors:</strong> This leads to large standard errors and wide confidence intervals. * <strong>Instability:</strong> Small changes in the data can lead to large swings in the coefficient estimates. * <strong>Misleading Significance:</strong> A variable might appear statistically insignificant (high p-value) not because it doesn’t matter, but because its effect is masked by the other correlated variable.</p>
-<p><strong>e) Management presentation strategy with correlated predictors:</strong> * <strong>Model vs.&nbsp;Insight:</strong> Use the model with both predictors for <em>prediction</em> if it performs better (higher <span class="math inline">\(R^2\)</span> or accuracy). * <strong>Presentation:</strong> When presenting to management, be careful not to imply that <em>both</em> variables are independently driving the result in an additive way if they are measuring the same underlying trait (e.g., “Generosity”). * <strong>Simplify:</strong> You might present the “stronger” or more intuitive variable as the key driver (e.g., “Past Giving Behavior”) and mention that this captures both the average and recent donation size. Or, verify if removing one drastically changes the model performance; if not, present the simpler model to management to avoid confusion. Explicitly state that these two factors move together. <em>Write your comparison and explanation here.</em></p>
+<p><strong>(a) Effect Size vs.&nbsp;Significance:</strong> Even though <code>AveIncEA</code> has a large effect size (doubling the probability of joining from the lowest to highest income levels), its effect is only marginally statistically significant (high p-value). This discrepancy occurs because statistical significance depends on both the <strong>magnitude of the effect</strong> and the <strong>precision of the estimate</strong> (standard error). This discrepancy can result from:</p>
+<ol type="1">
+<li><strong>High variability</strong> in the data regarding the relationship.</li>
+<li><strong>Multicollinearity:</strong> <code>AveIncEA</code> might be correlated with other predictors (e.g., <code>AveDonAmt</code> or <code>Region</code>), which inflates the standard error, making it hard for the model to isolate its specific contribution with certainty.</li>
+</ol>
+<p><strong>(b) Comparison:</strong> <em>Write your comparison and explanation here.</em></p>
+</section>
 <section id="exercise-5.4.19-managerial-description" class="level3">
 <h3 class="anchored" data-anchor-id="exercise-5.4.19-managerial-description">Exercise 5.4.19: Managerial Description</h3>
 <p><strong>Task:</strong> Describe in plain managerial English how the members of the monthly giving program differ from nonmembers.</p>
-<p><em>Write your answer here.</em></p>
+<p><strong>Answer:</strong></p>
+<p>Members of the monthly giving program can be distinguished from non-members by their giving history and location. Specifically:</p>
+<ol type="1">
+<li><strong>Giving History:</strong> Members tend to be more committed donors. They have higher <strong>average donation amounts</strong> in the past and donate <strong>more frequently</strong> (higher donations per year) compared to non-members.</li>
+<li><strong>Recent Engagement:</strong> The size of their <strong>last donation</strong> is also a strong indicator; those who gave larger amounts recently are more likely to join.</li>
+<li><strong>Demographics/Location:</strong> There are geographic differences, with donors in the <strong>Vancouver/Fraser</strong> regions (R2, R3) showing different adoption rates compared to other regions. (Note: Depending on the coefficient sign, one group is more likely).</li>
+<li><strong>Income:</strong> There is a tendency for donors from areas with higher <strong>average household income</strong> to be more likely to join, though this factor is less certain than their direct giving behavior.</li>
+</ol>
+<p>In summary, the best prospects for the monthly program are your <strong>active, high-value donors</strong> located in key regions.</p>
+</section>
 </section>
 <section id="additional-questions" class="level2">
 <h2 class="anchored" data-anchor-id="additional-questions">📝 Additional Questions</h2>
-<p><strong>a) Log transformations:</strong> <em>Answer here regarding variable types and appropriateness.</em></p>
-<p><strong>b) Reducing levels of categorical predictor:</strong> <em>Answer here.</em></p>
-<p><strong>c) Deciding which levels to combine:</strong> <em>Answer here.</em></p>
-<p><strong>d) Problems caused by correlated predictors:</strong> <em>Answer here.</em></p>
-<p><strong>e) Management presentation strategy with correlated predictors:</strong> <em>Answer here.</em></p>
-</section>
+<p><strong>a) Log transformations:</strong> * <strong>Variables that cannot be log-transformed:</strong> Variables with <strong>zero or negative values</strong> cannot be log-transformed directly (since <span class="math inline">\(log(0)\)</span> is undefined). For example, <code>YearsGive</code> might be 0 for a brand new donor. A common workaround is to add a small constant (e.g., <span class="math inline">\(log(x + 1)\)</span>). * <strong>Appropriateness:</strong> Log-transformations are appropriate when the relationship is <strong>non-linear</strong>, specifically <strong>concave</strong> (diminishing returns) or when the variable spans several orders of magnitude (highly skewed). It helps to linearize the relationship between the predictor and the log-odds of the target.</p>
+<p><strong>b) Why would you wish to reduce the number of levels of a categorical predictor?</strong> * <strong>Parsimony:</strong> Reducing complexity makes the model easier to interpret. * <strong>Statistical Power:</strong> Some levels might have very few observations (rare categories), leading to unstable estimates (large standard errors). Combining small, similar groups increases the sample size for that category. * <strong>Overfitting:</strong> Too many levels can lead to the model fitting noise rather than the signal.</p>
+<p><strong>c) How do you decide which levels to combine?</strong> * <strong>Similar Coefficients:</strong> Combine levels that have similar estimated coefficients (effects) on the target variable. * <strong>Logical Grouping:</strong> Combine levels that make conceptual sense to group together (e.g., grouping “January”, “February”, “March” into “Winter”). * <strong>Sample Size:</strong> Merge “rare” levels into a larger “Other” category if they are too small to be statistically significant on their own.</p>
+<p><strong>d) What problems do correlated predictors cause?</strong> * <strong>Multicollinearity:</strong> When predictors are highly correlated (e.g., <code>AveDonAmt</code> and <code>LastDonAmt</code>), it becomes difficult for the model to determine the unique effect of each variable. * <strong>Inflated Standard Errors:</strong> This leads to large standard errors and wide confidence intervals. * <strong>Instability:</strong> Small changes in the data can lead to large swings in the coefficient estimates. * <strong>Misleading Significance:</strong> A variable might appear statistically insignificant (high p-value) not because it doesn’t matter, but because its effect is masked by the other correlated variable.</p>
+<p><strong>e) Management presentation strategy with correlated predictors:</strong> * <strong>Model vs.&nbsp;Insight:</strong> Use the model with both predictors for <em>prediction</em> if it performs better (higher <span class="math inline">\(R^2\)</span> or accuracy). * <strong>Presentation:</strong> When presenting to management, be careful not to imply that <em>both</em> variables are independently driving the result in an additive way if they are measuring the same underlying trait (e.g., “Generosity”). * <strong>Simplify:</strong> You might present the “stronger” or more intuitive variable as the key driver (e.g., “Past Giving Behavior”) and mention that this captures both the average and recent donation size. Or, verify if removing one drastically changes the model performance; if not, present the simpler model to management to avoid confusion. Explicitly state that these two factors move together.</p>
 </section>
 
 </main>
