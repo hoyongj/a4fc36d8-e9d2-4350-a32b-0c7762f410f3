@@ -263,8 +263,8 @@ APURCH_bin    factor    0      2           2309            NA           NA</code
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute correlation matrix</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>cor_matrix <span class="ot">&lt;-</span> <span class="fu">cor</span>(numeric_vars, <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>)</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Find highly correlated pairs (|r| &gt; 0.8)</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>high_cor_indices <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">abs</span>(cor_matrix) <span class="sc">&gt;</span> <span class="fl">0.8</span> <span class="sc">&amp;</span> <span class="fu">abs</span>(cor_matrix) <span class="sc">&lt;</span> <span class="dv">1</span>, <span class="at">arr.ind =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Find highly correlated pairs (|r| &gt; 0.4)</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>high_cor_indices <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">abs</span>(cor_matrix) <span class="sc">&gt;</span> <span class="fl">0.4</span> <span class="sc">&amp;</span> <span class="fu">abs</span>(cor_matrix) <span class="sc">&lt;</span> <span class="dv">1</span>, <span class="at">arr.ind =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">length</span>(high_cor_indices) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract unique pairs</span></span>
@@ -279,10 +279,19 @@ APURCH_bin    factor    0      2           2309            NA           NA</code
 <span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(high_cor_pairs)</span>
 <span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      Var1      Var2 Correlation
-1 NINDINC1    numrr1   0.9920122
-2    gendf     gendm  -0.9817376
-3  BALMRGG DUMNOMRGG  -0.8135597</code></pre>
+<pre><code>        Var1      Var2 Correlation
+1   NINDINC1    numrr1   0.9920122
+2      gendf     gendm  -0.9817376
+3    BALMRGG DUMNOMRGG  -0.8135597
+4    avginc1   avginv1   0.6891150
+5    BALLOAN DUMNOLOAN  -0.6757180
+6   DUMNOLOC   TOTSERV  -0.6314074
+7    CHNMPRD  CHNMSERV   0.6104519
+8      TXATM     TXPOS   0.5857099
+9  DUMNOMRGG   TOTSERV  -0.5141650
+10     TXPOS     TXWEB   0.4578864
+11   BALMRGG   TOTSERV   0.4290177
+12    BALCHQ    TOTDEP   0.4110489</code></pre>
 </div>
 </div>
 </section>
