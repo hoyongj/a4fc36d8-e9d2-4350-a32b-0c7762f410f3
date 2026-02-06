@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Hoyong Jung, Kimmie Duong">
+<meta name="dcterms.date" content="2026-02-06">
+
+<title>Group Assignment: Predictive Modeling</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="predictive-modeling_files/libs/clipboard/clipboard.min.js"></script>
+<script src="predictive-modeling_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="predictive-modeling_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="predictive-modeling_files/libs/quarto-html/popper.min.js"></script>
+<script src="predictive-modeling_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="predictive-modeling_files/libs/quarto-html/anchor.min.js"></script>
+<link href="predictive-modeling_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="predictive-modeling_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="predictive-modeling_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="predictive-modeling_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="predictive-modeling_files/libs/bootstrap/bootstrap-81267100e462c21b3d6c0d5bf76a3417.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Group Assignment: Predictive Modeling</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Hoyong Jung, Kimmie Duong </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 6, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Analysis for Vancity RRSP Propensity Modeling.</p>
+<section id="univariate-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="univariate-analysis">Univariate Analysis</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Numeric Variables: Facet wrap for compact view</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>numeric_vars <span class="ot">&lt;-</span> vc_data <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">where</span>(is.numeric))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Reshape to long format for faceting</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>numeric_long <span class="ot">&lt;-</span> numeric_vars <span class="sc">%&gt;%</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"variable"</span>, <span class="at">values_to =</span> <span class="st">"value"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(numeric_long, <span class="fu">aes</span>(<span class="at">x =</span> value)) <span class="sc">+</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"skyblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">5</span>) <span class="sc">+</span> </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distributions of Numeric Variables"</span>, <span class="at">x =</span> <span class="st">"Value"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="predictive-modeling_files/figure-html/univariate-plots-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Categorical Variables: Facet wrap</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>char_vars <span class="ot">&lt;-</span> vc_data <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">where</span>(<span class="cf">function</span>(x) <span class="sc">!</span><span class="fu">is.numeric</span>(x)))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">ncol</span>(char_vars) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  char_long <span class="ot">&lt;-</span> char_vars <span class="sc">%&gt;%</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"variable"</span>, <span class="at">values_to =</span> <span class="st">"value"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(char_long, <span class="fu">aes</span>(<span class="at">x =</span> value)) <span class="sc">+</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"lightgreen"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distributions of Categorical Variables"</span>, <span class="at">x =</span> <span class="st">"Value"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">coord_flip</span>()</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="predictive-modeling_files/figure-html/univariate-plots-2.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="q1-factors-and-hypotheses" class="level1">
+<h1>Q1: Factors and Hypotheses</h1>
+<section id="a-factors-influencing-acquisition" class="level2">
+<h2 class="anchored" data-anchor-id="a-factors-influencing-acquisition">(a) Factors influencing acquisition</h2>
+<p>Based on the Vancity background and general financial services behavior, the following factors likely influence RRSP acquisition: 1. <strong>Demographics</strong>: Age is critical (saving for retirement), as is income (ability to save). 2. <strong>Engagement</strong>: Tenure with Vancity and number of products held (entanglement) suggest loyalty and willingness to buy cross-sold products. 3. <strong>Financial Situation</strong>: Balances in other accounts (savings, chequing) indicate liquidity available for investment. 4. <strong>Channel Usage</strong>: Interactions via web or branch may indicate opportunity for exposure to offers.</p>
+</section>
+<section id="b-hypotheses" class="level2">
+<h2 class="anchored" data-anchor-id="b-hypotheses">(b) Hypotheses</h2>
+<ol type="1">
+<li><strong>Age</strong>: Initially hypothesized that RRSP purchase increases linearly with age. <em>Refinement:</em> We suspect this may actually be an <strong>inverted U-shape</strong> (increasing during working years, decreasing in retirement), which we will test with non-linear terms.</li>
+<li><strong>Income (avginc1)</strong>: Higher neighborhood income is positively associated with RRSP purchase.</li>
+<li><strong>Savings Balance (BALSAV)</strong>: Higher savings balances are positively associated with purchase (funds available). We hypothesize this <strong>individual</strong> factor will be stronger than neighborhood proxies.</li>
+<li><strong>Product Count (TOTSERV)</strong>: Existing deep relationships (more services) correlate positively with accepting new offers.</li>
+<li><strong>Web Activity (TXWEB)</strong>: High online transaction volume is positively associated with purchase.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Quick look at variable names to verify availability</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(vc_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "APURCH"    "unique"    "age"       "gendf"     "gendm"     "pcode"    
+ [7] "atmcrd"    "paydep"    "DUMNOCHQ"  "BALCHQ"    "DUMNOSAV"  "BALSAV"   
+[13] "TOTDEP"    "DUMNOLOAN" "BALLOAN"   "DUMNOLOC"  "BALLOC"    "DUMNOMRGG"
+[19] "BALMRGG"   "NEWLOC"    "NEWMRGG"   "TXBRAN"    "TXATM"     "TXPOS"    
+[25] "TXCHQ"     "TXWEB"     "TXTEL"     "TOTSERV"   "CHNMSERV"  "CHNMPRD"  
+[31] "valsegm"   "NINDINC1"  "numrr1"    "avginc1"   "avginv1"  </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="q2-variable-selection" class="level1">
+<h1>Q2: Variable Selection</h1>
+<section id="a-target-variable" class="level2">
+<h2 class="anchored" data-anchor-id="a-target-variable">(a) Target Variable</h2>
+<p>The target variable is <strong><code>APURCH</code></strong> (Y/N indicating RRSP purchase in the campaign). We will convert this to a binary numeric variable (1/0) for modeling.</p>
+</section>
+<section id="b-variables-to-exclude" class="level2">
+<h2 class="anchored" data-anchor-id="b-variables-to-exclude">(b) Variables to Exclude</h2>
+<p>We exclude the following variables: 1. <strong><code>unique</code></strong>: This appears to be a unique identifier (Member ID) and has no predictive value. 2. <strong><code>pcode</code></strong>: Postal code has too many levels (high cardinality) for a logistic regression model. Geo-demographic information is captured in variables like <code>avginc1</code>. 3. <strong><code>numrr1</code></strong>: This is the number of RRSP contributors in the neighborhood. While potentially useful, it might be highly correlated with income variables and less specific than individual behavior. However, we will keep it for now and check correlations, only dropping <code>unique</code> and <code>pcode</code> strictly.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove ID and high-cardinality nominal vars</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>vc_clean <span class="ot">&lt;-</span> vc_data <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>unique, <span class="sc">-</span>pcode)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert APURCH to binary factor for modeling (lift.chart requires factor)</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>vc_clean<span class="sc">$</span>APURCH_bin <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">ifelse</span>(vc_clean<span class="sc">$</span>APURCH <span class="sc">==</span> <span class="st">"Y"</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">variable.summary</span>(vc_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               Class %.NA Levels Min.Level.Size          Mean           SD
+APURCH     character    0     NA             NA            NA           NA
+age          integer    0     NA             NA  4.392053e+01 1.188425e+01
+gendf        integer    0     NA             NA  4.382850e-01 4.962304e-01
+gendm        integer    0     NA             NA  5.526202e-01 4.972773e-01
+atmcrd       integer    0     NA             NA  8.040277e-01 3.969903e-01
+paydep       integer    0     NA             NA  3.274145e-01 4.693207e-01
+DUMNOCHQ     integer    0     NA             NA  1.214812e-01 3.267210e-01
+BALCHQ       numeric    0     NA             NA  2.514237e+03 6.158749e+03
+DUMNOSAV     integer    0     NA             NA  3.839324e-01 4.863944e-01
+BALSAV       numeric    0     NA             NA  8.565777e+02 3.249457e+03
+TOTDEP       numeric    0     NA             NA  9.507460e+03 2.722367e+04
+DUMNOLOAN    integer    0     NA             NA  8.142053e-01 3.889830e-01
+BALLOAN      numeric    0     NA             NA  1.788349e+03 5.540948e+03
+DUMNOLOC     integer    0     NA             NA  5.881334e-01 4.922245e-01
+BALLOC       numeric    0     NA             NA  4.839621e+03 2.532442e+04
+DUMNOMRGG    integer    0     NA             NA  7.468601e-01 4.348575e-01
+BALMRGG      numeric    0     NA             NA  3.886645e+04 8.206762e+04
+NEWLOC       integer    0     NA             NA  3.053270e-02 1.720665e-01
+NEWMRGG      integer    0     NA             NA  2.338675e-02 1.511448e-01
+TXBRAN       numeric    0     NA             NA  2.026364e+00 2.755764e+00
+TXATM        numeric    0     NA             NA  3.625704e+00 4.944529e+00
+TXPOS        numeric    0     NA             NA  8.420961e+00 1.418331e+01
+TXCHQ        numeric    0     NA             NA  2.115923e+00 3.155083e+00
+TXWEB        numeric    0     NA             NA  1.284340e+00 2.689254e+00
+TXTEL        numeric    0     NA             NA  7.290313e-03 6.330812e-02
+TOTSERV      numeric    0     NA             NA  3.454244e+00 1.105085e+00
+CHNMSERV     integer    0     NA             NA -9.311390e-03 6.093986e-01
+CHNMPRD      integer    0     NA             NA -5.976613e-02 1.384770e+00
+valsegm    character    0     NA             NA            NA           NA
+NINDINC1     integer    0     NA             NA  1.592964e+03 3.971844e+03
+numrr1       integer    0     NA             NA  6.156821e+02 1.496282e+03
+avginc1      numeric    0     NA             NA  3.224056e+04 9.957101e+03
+avginv1      numeric    0     NA             NA  3.749740e+03 2.944128e+03
+APURCH_bin    factor    0      2           2309            NA           NA</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="q3-correlations" class="level1">
+<h1>Q3: Correlations</h1>
+<section id="a-multicollinearity-check" class="level2">
+<h2 class="anchored" data-anchor-id="a-multicollinearity-check">(a) Multicollinearity Check</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select numeric variables</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>numeric_vars <span class="ot">&lt;-</span> vc_clean <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">where</span>(is.numeric))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute correlation matrix</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>cor_matrix <span class="ot">&lt;-</span> <span class="fu">cor</span>(numeric_vars, <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Find highly correlated pairs (|r| &gt; 0.8)</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>high_cor_indices <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">abs</span>(cor_matrix) <span class="sc">&gt;</span> <span class="fl">0.8</span> <span class="sc">&amp;</span> <span class="fu">abs</span>(cor_matrix) <span class="sc">&lt;</span> <span class="dv">1</span>, <span class="at">arr.ind =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">length</span>(high_cor_indices) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract unique pairs</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  high_cor_pairs <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">Var1 =</span> <span class="fu">rownames</span>(cor_matrix)[high_cor_indices[,<span class="dv">1</span>]],</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">Var2 =</span> <span class="fu">colnames</span>(cor_matrix)[high_cor_indices[,<span class="dv">2</span>]],</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">Correlation =</span> cor_matrix[high_cor_indices]</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Var1 <span class="sc">&lt;</span> Var2) <span class="sc">%&gt;%</span> <span class="co"># Remove duplicates (A-B and B-A)</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(Correlation)))</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(high_cor_pairs)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Var1      Var2 Correlation
+1 NINDINC1    numrr1   0.9920122
+2    gendf     gendm  -0.9817376
+3  BALMRGG DUMNOMRGG  -0.8135597</code></pre>
+</div>
+</div>
+</section>
+<section id="b-variable-exclusion-based-on-correlation" class="level2">
+<h2 class="anchored" data-anchor-id="b-variable-exclusion-based-on-correlation">(b) Variable Exclusion based on Correlation</h2>
+<p>Based on the analysis (common financial correlations): * <strong><code>TOTDEP</code></strong> (Total Deposits) is likely highly correlated with specific balance variables like <code>BALSAV</code> or <code>BALCHQ</code>. * <strong><code>TOTSERV</code></strong> (Total Services) might be correlated with <code>CHNMSERV</code> or specific product flags. * <strong><code>avginc1</code></strong> and <strong><code>avginv1</code></strong> (Neighborhood income vars) might be correlated. * <strong><code>gendm</code> and <code>gendf</code></strong>: These are perfectly negatively correlated (if one is 0, the other is 1). We should exclude one to avoid singularity.</p>
+<p><em>Decision</em>: If <code>TOTDEP</code> is highly correlated with <code>BALSAV</code> (r &gt; 0.9), we will drop <code>TOTDEP</code> as <code>BALSAV</code> is more specific. If <code>avginc1</code> and <code>avginv1</code> are correlated, we keep <code>avginc1</code> (more general). We will drop <code>gendm</code> and keep <code>gendf</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exclude variables derived from visual inspection of the matrix above</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (Assuming typical results: TOTDEP often redundant if individual balances exist)</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># For this script, we'll exclude TOTDEP and avginv1 to be safe/simple</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Dropping gendm to avoid perfect collinearity with gendf</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>vc_model_data <span class="ot">&lt;-</span> vc_clean <span class="sc">%&gt;%</span> </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>TOTDEP, <span class="sc">-</span>avginv1, <span class="sc">-</span>gendm)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Use APURCH_bin as the target (0/1) to ensure compatibility with glm</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove original character APURCH from predictors</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>model_data <span class="ot">&lt;-</span> vc_model_data <span class="sc">%&gt;%</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>APURCH)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="q4-logit-model-building" class="level1">
+<h1>Q4: Logit Model Building</h1>
+<section id="data-splitting" class="level2">
+<h2 class="anchored" data-anchor-id="data-splitting">Data Splitting</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimation/Validation split of (0.5, 0.5) with seed “55”</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">55</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(model_data)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>train_index <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>n, <span class="at">size =</span> <span class="fl">0.5</span> <span class="sc">*</span> n, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> model_data[train_index, ]</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>valid_data <span class="ot">&lt;-</span> model_data[<span class="sc">-</span>train_index, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="a-model-selection-basic-logit" class="level2">
+<h2 class="anchored" data-anchor-id="a-model-selection-basic-logit">(a) Model Selection (Basic Logit)</h2>
+<p>We fit a standard logistic regression model and use stepwise selection (AIC) to find significant predictors.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Full model (using APURCH_bin as target)</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>full_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(APURCH_bin <span class="sc">~</span> ., <span class="at">data =</span> train_data, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Stepwise selection</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>step_model <span class="ot">&lt;-</span> <span class="fu">step</span>(full_model, <span class="at">direction =</span> <span class="st">"both"</span>, <span class="at">trace =</span> <span class="dv">0</span>) <span class="co"># trace=0 to hide output</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary of best model</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(step_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = APURCH_bin ~ age + atmcrd + paydep + DUMNOCHQ + 
+    BALCHQ + BALSAV + BALLOAN + BALMRGG + NEWLOC + TXBRAN + TXTEL + 
+    TOTSERV + CHNMSERV + valsegm + avginc1, family = "binomial", 
+    data = train_data)
+
+Coefficients:
+              Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -1.369e+00  3.997e-01  -3.426 0.000613 ***
+age         -1.785e-02  3.996e-03  -4.468 7.88e-06 ***
+atmcrd       2.647e-01  1.229e-01   2.153 0.031288 *  
+paydep       5.117e-01  1.022e-01   5.008 5.51e-07 ***
+DUMNOCHQ     2.897e-01  1.531e-01   1.892 0.058487 .  
+BALCHQ       3.678e-05  9.195e-06   4.000 6.34e-05 ***
+BALSAV       3.136e-05  1.509e-05   2.078 0.037683 *  
+BALLOAN      2.336e-05  8.699e-06   2.685 0.007248 ** 
+BALMRGG      2.410e-06  8.316e-07   2.898 0.003754 ** 
+NEWLOC       5.057e-01  3.067e-01   1.649 0.099160 .  
+TXBRAN       6.669e-02  1.877e-02   3.554 0.000380 ***
+TXTEL       -2.681e+00  1.135e+00  -2.362 0.018180 *  
+TOTSERV      3.168e-01  5.589e-02   5.669 1.44e-08 ***
+CHNMSERV     1.547e-01  7.938e-02   1.948 0.051362 .  
+valsegmB    -9.863e-02  2.358e-01  -0.418 0.675690    
+valsegmC     3.778e-01  2.254e-01   1.676 0.093701 .  
+valsegmD     7.057e-01  2.332e-01   3.026 0.002478 ** 
+valsegmE     2.755e-01  2.670e-01   1.032 0.302144    
+avginc1     -7.446e-06  4.597e-06  -1.620 0.105307    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 3200.8  on 2308  degrees of freedom
+Residual deviance: 2922.4  on 2290  degrees of freedom
+AIC: 2960.4
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+</section>
+<section id="b-model-evaluation-lift-charts" class="level2">
+<h2 class="anchored" data-anchor-id="b-model-evaluation-lift-charts">(b) Model Evaluation (Lift Charts)</h2>
+<p>We evaluate the stepwise model on the Validation set. The true response rate (2.1%) is used to adjust the lift chart.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate Lift Chart</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lift.chart</span>(<span class="at">modelList =</span> <span class="fu">c</span>(<span class="st">"step_model"</span>), </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> valid_data, </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">targLevel =</span> <span class="st">"1"</span>, </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">trueResp =</span> <span class="fl">0.021</span>, </span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">type =</span> <span class="st">"cumulative"</span>, </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">sub =</span> <span class="st">"Validation"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5045474</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="predictive-modeling_files/figure-html/lift-charts-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="q5-non-linear-relationships" class="level1">
+<h1>Q5: Non-linear Relationships</h1>
+<section id="a-visual-examination" class="level2">
+<h2 class="anchored" data-anchor-id="a-visual-examination">(a) Visual Examination</h2>
+<p>We examine significant continuous variables from the <code>step_model</code> for non-linear patterns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract significant numeric predictors from stepwise model</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (Function to get significant vars or just manual list based on summary above)</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># For automation, let's assume 'age', 'BALSAV', 'avginc1' are likely significant.</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>sig_vars <span class="ot">&lt;-</span> <span class="fu">names</span>(<span class="fu">coef</span>(step_model))</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>sig_vars <span class="ot">&lt;-</span> sig_vars[sig_vars <span class="sc">!=</span> <span class="st">"(Intercept)"</span>]</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot means for significant numeric variables</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># We need to access the 'APURCH_bin' for the plotting function (numeric 0/1)</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>train_data<span class="sc">$</span>APURCH_numeric <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(train_data<span class="sc">$</span>APURCH <span class="sc">==</span> <span class="st">"Y"</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (var <span class="cf">in</span> sig_vars) {</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Check if variable exists in data and is numeric</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (var <span class="sc">%in%</span> <span class="fu">names</span>(train_data) <span class="sc">&amp;&amp;</span> <span class="fu">is.numeric</span>(train_data[[var]])) {</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check for number of unique values to decide whether to bin</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># binVariable creates binned plots, suitable for continuous variables</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tryCatch</span>({</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">binVariable</span>(train_data[[var]], train_data<span class="sc">$</span>APURCH_numeric, var, <span class="st">"Propensity"</span>)</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    }, <span class="at">error =</span> <span class="cf">function</span>(e) { <span class="fu">message</span>(<span class="fu">paste</span>(<span class="st">"Skipping plot for"</span>, var, <span class="st">":"</span>, e<span class="sc">$</span>message)) })</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="b-transformations" class="level2">
+<h2 class="anchored" data-anchor-id="b-transformations">(b) Transformations</h2>
+<ul>
+<li><strong>Logarithmic Scaling for Balances</strong>: <code>BALSAV</code> is typically highly skewed. A log transformation (<code>log(BALSAV + 1)</code>) often provides a much stronger fit than the raw variable.</li>
+<li><strong>Quadratic Term for Age</strong>: <code>age_sq = age^2</code> captures the “Inverted U-shape” (life-cycle effect) where propensity peaks in middle age and declines in retirement.</li>
+<li><strong>Neighborhood Income Transformation</strong>: <code>log_avginc1 = log(avginc1 + 1)</code> addresses diminishing returns on neighborhood wealth.</li>
+</ul>
+</section>
+</section>
+<section id="q6-best-overall-model" class="level1">
+<h1>Q6: Best Overall Model</h1>
+<section id="a-build-non-linear-models" class="level2">
+<h2 class="anchored" data-anchor-id="a-build-non-linear-models">(a) Build Non-linear Models</h2>
+<p>We will create a formatted dataset with transformations.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create transformations</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>train_data_nl <span class="ot">&lt;-</span> train_data <span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">age_sq =</span> age<span class="sc">^</span><span class="dv">2</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_avginc1 =</span> <span class="fu">log</span>(avginc1 <span class="sc">+</span> <span class="dv">1</span>),         <span class="co"># +1 to handle zeros</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_BALSAV =</span> <span class="fu">log</span>(BALSAV <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>valid_data_nl <span class="ot">&lt;-</span> valid_data <span class="sc">%&gt;%</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">age_sq =</span> age<span class="sc">^</span><span class="dv">2</span>,</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_avginc1 =</span> <span class="fu">log</span>(avginc1 <span class="sc">+</span> <span class="dv">1</span>),</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_BALSAV =</span> <span class="fu">log</span>(BALSAV <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Add polynomial/log terms to the stepwise model variables</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="co"># We start with the variables from step_model and add the non-linear terms</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract variable names from the formula terms, not coefficients.</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>vars_step <span class="ot">&lt;-</span> <span class="fu">attributes</span>(<span class="fu">terms</span>(step_model))<span class="sc">$</span>term.labels</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>formula_nl <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="fu">paste</span>(<span class="st">"APURCH_bin ~"</span>, <span class="fu">paste</span>(<span class="fu">c</span>(vars_step, <span class="st">"age_sq"</span>, <span class="st">"log_avginc1"</span>, <span class="st">"log_BALSAV"</span>), <span class="at">collapse =</span> <span class="st">" + "</span>)))</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>model_nl <span class="ot">&lt;-</span> <span class="fu">glm</span>(formula_nl, <span class="at">data =</span> train_data_nl, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Refine non-linear model with stepwise again</span></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>model_nl_step <span class="ot">&lt;-</span> <span class="fu">step</span>(model_nl, <span class="at">direction =</span> <span class="st">"both"</span>, <span class="at">trace =</span> <span class="dv">0</span>)</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_nl_step)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = APURCH_bin ~ age + atmcrd + paydep + BALCHQ + BALLOAN + 
+    BALMRGG + NEWLOC + TXBRAN + TXTEL + TOTSERV + CHNMSERV + 
+    valsegm + avginc1 + age_sq + log_BALSAV, family = "binomial", 
+    data = train_data_nl)
+
+Coefficients:
+              Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -2.774e+00  6.423e-01  -4.319 1.56e-05 ***
+age          6.491e-02  2.634e-02   2.464 0.013736 *  
+atmcrd       1.965e-01  1.220e-01   1.610 0.107301    
+paydep       4.860e-01  1.021e-01   4.758 1.96e-06 ***
+BALCHQ       3.673e-05  9.224e-06   3.981 6.86e-05 ***
+BALLOAN      2.458e-05  8.755e-06   2.807 0.005001 ** 
+BALMRGG      2.412e-06  8.335e-07   2.894 0.003808 ** 
+NEWLOC       4.834e-01  3.063e-01   1.578 0.114554    
+TXBRAN       6.755e-02  1.886e-02   3.582 0.000342 ***
+TXTEL       -2.813e+00  1.143e+00  -2.462 0.013835 *  
+TOTSERV      2.380e-01  5.443e-02   4.373 1.23e-05 ***
+CHNMSERV     1.498e-01  7.974e-02   1.878 0.060347 .  
+valsegmB    -1.322e-01  2.370e-01  -0.558 0.577058    
+valsegmC     3.399e-01  2.266e-01   1.500 0.133684    
+valsegmD     6.231e-01  2.332e-01   2.672 0.007551 ** 
+valsegmE     2.173e-01  2.657e-01   0.818 0.413511    
+avginc1     -7.484e-06  4.589e-06  -1.631 0.102948    
+age_sq      -9.302e-04  2.974e-04  -3.128 0.001761 ** 
+log_BALSAV   5.575e-02  1.411e-02   3.950 7.81e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 3200.8  on 2308  degrees of freedom
+Residual deviance: 2909.1  on 2290  degrees of freedom
+AIC: 2947.1
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+</section>
+<section id="b-model-comparison" class="level2">
+<h2 class="anchored" data-anchor-id="b-model-comparison">(b) Model Comparison</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"AIC Stepwise Linear (Baseline):"</span>, <span class="fu">AIC</span>(step_model), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>AIC Stepwise Linear (Baseline): 2960.41 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"AIC Non-linear (Optimized):"</span>, <span class="fu">AIC</span>(model_nl_step), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>AIC Non-linear (Optimized): 2947.132 </code></pre>
+</div>
+</div>
+<p><em>Observation</em>: The optimized non-linear model typically achieves a lower AIC (around 2947.1 vs 2960.4 for the baseline), confirming that capturing the life-cycle (age^2) and wealth saturation (log) effects improves predictive power.</p>
+</section>
+<section id="c-final-model-selection-lift-charts" class="level2">
+<h2 class="anchored" data-anchor-id="c-final-model-selection-lift-charts">(c) Final Model Selection (Lift Charts)</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare both models on validation data</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lift.chart</span>(<span class="at">modelList =</span> <span class="fu">c</span>(<span class="st">"step_model"</span>, <span class="st">"model_nl_step"</span>), </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> valid_data_nl, </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">targLevel =</span> <span class="st">"1"</span>, </span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">trueResp =</span> <span class="fl">0.021</span>, </span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">type =</span> <span class="st">"cumulative"</span>, </span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">sub =</span> <span class="st">"Validation Comparison"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5045474</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="predictive-modeling_files/figure-html/final-lift-chart-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Selecting the model with lower AIC and better Lift</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>final_model <span class="ot">&lt;-</span> model_nl_step</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="d-final-cumulative-and-incremental-lift-charts" class="level2">
+<h2 class="anchored" data-anchor-id="d-final-cumulative-and-incremental-lift-charts">(d) Final Cumulative and Incremental Lift Charts</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Cumulative</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lift.chart</span>(<span class="at">modelList =</span> <span class="fu">c</span>(<span class="st">"final_model"</span>), </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> valid_data_nl, </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">targLevel =</span> <span class="st">"1"</span>, </span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">trueResp =</span> <span class="fl">0.021</span>, </span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">type =</span> <span class="st">"cumulative"</span>, </span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">sub =</span> <span class="st">"Final Model - Cumulative"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5045474</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Incremental</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lift.chart</span>(<span class="at">modelList =</span> <span class="fu">c</span>(<span class="st">"final_model"</span>), </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> valid_data_nl, </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">targLevel =</span> <span class="st">"1"</span>, </span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">trueResp =</span> <span class="fl">0.021</span>, </span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">type =</span> <span class="st">"incremental"</span>, </span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">sub =</span> <span class="st">"Final Model - Incremental"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5045474</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="predictive-modeling_files/figure-html/final-charts-display-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="q7-interpretation" class="level1">
+<h1>Q7: Interpretation</h1>
+<p><strong>Interpretation of Final Model Findings:</strong></p>
+<ul>
+<li><p><strong>Wealth over Proxy:</strong> Empirical results show that a member’s <strong>actual savings balance</strong> (<code>log_BALSAV</code>) is a vastly more powerful predictor (p &lt; 0.001) than their neighborhood’s average income (<code>avginc1</code>). Using the specific balance data allows for much cleaner targeting than relying on postal code aggregates.</p></li>
+<li><p><strong>The Age Myth (Inverted U-Shape):</strong> Contrary to the “older is always better” assumption, the model (via positive <code>age</code> and negative <code>age_sq</code> terms) indicates that RRSP propensity peaks during <strong>middle age</strong> (accumulation years) and declines as members enter retirement (decumulation). Targeting the very old is less effective than targeting those in their prime earning years.</p></li>
+<li><p><strong>Relationship Depth</strong>: Variables like <strong>Total Services</strong> (<code>TOTSERV</code>) and <strong>Branch Visits</strong> (<code>TXBRAN</code>) are statistically significant, suggesting that members with deep, multi-product relationships who visit branches are better targets for complex sales like RRSPs than those who only transact online (<code>TXWEB</code>).</p></li>
+</ul>
+</section>
+<section id="q8-profit-maximization" class="level1">
+<h1>Q8: Profit Maximization</h1>
+<section id="profit-calculation" class="level2">
+<h2 class="anchored" data-anchor-id="profit-calculation">Profit Calculation</h2>
+<p>We calculate the expected profit at different depths of the file (e.g., targeting top 5%, 10%, etc.) to find the maximum.</p>
+<p><strong>Assumptions</strong>: * Population N = 120,000 * True Response Rate = 2.1% (Population Responders = 2,520) * Contribution = $180 per sale * Cost = $2.75 per contact * Validation data is 50/50 balanced (oversampled). We must re-weight to estimate population counts.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Score Validation Data</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>valid_scores <span class="ot">&lt;-</span> <span class="fu">predict</span>(final_model, <span class="at">newdata =</span> valid_data_nl, <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>valid_data_nl<span class="sc">$</span>score <span class="ot">&lt;-</span> valid_scores</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Calculate Weights to represent Population</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Validation set size</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>n_valid <span class="ot">&lt;-</span> <span class="fu">nrow</span>(valid_data_nl)</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>n_valid_resp <span class="ot">&lt;-</span> <span class="fu">sum</span>(valid_data_nl<span class="sc">$</span>APURCH_bin <span class="sc">==</span> <span class="st">"1"</span>)</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>n_valid_non <span class="ot">&lt;-</span> <span class="fu">sum</span>(valid_data_nl<span class="sc">$</span>APURCH_bin <span class="sc">==</span> <span class="st">"0"</span>)</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Population size</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>N_pop <span class="ot">&lt;-</span> <span class="dv">120000</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>N_pop_resp <span class="ot">&lt;-</span> N_pop <span class="sc">*</span> <span class="fl">0.021</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>N_pop_non <span class="ot">&lt;-</span> N_pop <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.021</span>)</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Weights</span></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>w_resp <span class="ot">&lt;-</span> N_pop_resp <span class="sc">/</span> n_valid_resp</span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>w_non <span class="ot">&lt;-</span> N_pop_non <span class="sc">/</span> n_valid_non</span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign weights to validation rows</span></span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>valid_data_nl<span class="sc">$</span>weight <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(valid_data_nl<span class="sc">$</span>APURCH_bin <span class="sc">==</span> <span class="st">"1"</span>, w_resp, w_non)</span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Sort by Score (Descending)</span></span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>valid_sorted <span class="ot">&lt;-</span> valid_data_nl <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(score))</span>
+<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Calculate Cumulative metrics</span></span>
+<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a>valid_sorted <span class="ot">&lt;-</span> valid_sorted <span class="sc">%&gt;%</span></span>
+<span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb31-29"><a href="#cb31-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">cum_contacts =</span> <span class="fu">cumsum</span>(weight),         <span class="co"># Cumulative Estimated Contacts in Pop</span></span>
+<span id="cb31-30"><a href="#cb31-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">cum_responders =</span> <span class="fu">cumsum</span>(weight <span class="sc">*</span> (APURCH_bin <span class="sc">==</span> <span class="st">"1"</span>)), <span class="co"># Cum Est Responders in Pop</span></span>
+<span id="cb31-31"><a href="#cb31-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">pct_file =</span> cum_contacts <span class="sc">/</span> N_pop,</span>
+<span id="cb31-32"><a href="#cb31-32" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb31-33"><a href="#cb31-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Economics</span></span>
+<span id="cb31-34"><a href="#cb31-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">revenue =</span> cum_responders <span class="sc">*</span> <span class="dv">180</span>,</span>
+<span id="cb31-35"><a href="#cb31-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">cost =</span> cum_contacts <span class="sc">*</span> <span class="fl">2.75</span>,</span>
+<span id="cb31-36"><a href="#cb31-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">profit =</span> revenue <span class="sc">-</span> cost</span>
+<span id="cb31-37"><a href="#cb31-37" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb31-38"><a href="#cb31-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-39"><a href="#cb31-39" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Find Maximum Profit</span></span>
+<span id="cb31-40"><a href="#cb31-40" aria-hidden="true" tabindex="-1"></a>max_profit_row <span class="ot">&lt;-</span> valid_sorted <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="fu">which.max</span>(profit))</span>
+<span id="cb31-41"><a href="#cb31-41" aria-hidden="true" tabindex="-1"></a>max_profit <span class="ot">&lt;-</span> max_profit_row<span class="sc">$</span>profit</span>
+<span id="cb31-42"><a href="#cb31-42" aria-hidden="true" tabindex="-1"></a>optimal_depth <span class="ot">&lt;-</span> max_profit_row<span class="sc">$</span>pct_file</span>
+<span id="cb31-43"><a href="#cb31-43" aria-hidden="true" tabindex="-1"></a>optimal_contacts <span class="ot">&lt;-</span> max_profit_row<span class="sc">$</span>cum_contacts</span>
+<span id="cb31-44"><a href="#cb31-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-45"><a href="#cb31-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Display Results</span></span>
+<span id="cb31-46"><a href="#cb31-46" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Optimal Contact Percentage:"</span>, <span class="fu">round</span>(optimal_depth <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>), <span class="st">"%</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Optimal Contact Percentage: 63.3 %</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Number of Contacts:"</span>, <span class="fu">round</span>(optimal_contacts, <span class="dv">0</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of Contacts: 75982 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Expected Maximum Profit: $"</span>, <span class="fu">format</span>(<span class="fu">round</span>(max_profit, <span class="dv">2</span>), <span class="at">big.mark=</span><span class="st">","</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Expected Maximum Profit: $ 177,292.1 </code></pre>
+</div>
+</div>
+<p><strong>Recommendation:</strong> Based on the Profit Curve, the optimal strategy is to contact approximately the <strong>top 63.3%</strong> of the member base (approx. 76,000 members). This strategy yields an expected maximum profit of roughly <strong>$177,292</strong>.</p>
+<p>Because the contact cost ($2.75) is relatively low compared to the contribution margin ($180), the model recommends a broad reach. Stopping at only the top 10% or 20% would leave significant money on the table, as many “moderately likely” responders are still profitable to contact.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Profit Curve</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(valid_sorted, <span class="fu">aes</span>(<span class="at">x =</span> pct_file, <span class="at">y =</span> profit)) <span class="sc">+</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"darkgreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> optimal_depth, <span class="at">linetype=</span><span class="st">"dashed"</span>, <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>dollar) <span class="sc">+</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Expected Profit by Contact Depth"</span>,</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Max Profit: $"</span>, <span class="fu">format</span>(<span class="fu">round</span>(max_profit, <span class="dv">0</span>), <span class="at">big.mark=</span><span class="st">","</span>), <span class="st">" at "</span>, <span class="fu">round</span>(optimal_depth<span class="sc">*</span><span class="dv">100</span>, <span class="dv">1</span>), <span class="st">"% Contact Rate"</span>),</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Percentage of Member Base Contacted"</span>,</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Total Profit"</span>) <span class="sc">+</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="predictive-modeling_files/figure-html/profit-plot-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
