@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Hoyong Jung, Kimmie Duong">
-<meta name="dcterms.date" content="2026-02-06">
+<meta name="dcterms.date" content="2026-02-12">
 
 <title>Group Assignment: Predictive Modeling</title>
 <style>
@@ -100,7 +100,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 6, 2026</p>
+      <p class="date">February 12, 2026</p>
     </div>
   </div>
   
@@ -297,20 +297,21 @@ APURCH_bin    factor    0      2           2309            NA           NA</code
 </section>
 <section id="b-variable-exclusion-based-on-correlation" class="level2">
 <h2 class="anchored" data-anchor-id="b-variable-exclusion-based-on-correlation">(b) Variable Exclusion based on Correlation</h2>
-<p>Based on the analysis (common financial correlations): * <strong><code>TOTDEP</code></strong> (Total Deposits) is likely highly correlated with specific balance variables like <code>BALSAV</code> or <code>BALCHQ</code>. * <strong><code>TOTSERV</code></strong> (Total Services) might be correlated with <code>CHNMSERV</code> or specific product flags. * <strong><code>avginc1</code></strong> and <strong><code>avginv1</code></strong> (Neighborhood income vars) might be correlated. * <strong><code>gendm</code> and <code>gendf</code></strong>: These are perfectly negatively correlated (if one is 0, the other is 1). We should exclude one to avoid singularity.</p>
-<p><em>Decision</em>: If <code>TOTDEP</code> is highly correlated with <code>BALSAV</code> (r &gt; 0.9), we will drop <code>TOTDEP</code> as <code>BALSAV</code> is more specific. If <code>avginc1</code> and <code>avginv1</code> are correlated, we keep <code>avginc1</code> (more general). We will drop <code>gendm</code> and keep <code>gendf</code>.</p>
+<p>Based on the analysis and feedback: * <strong><code>TOTDEP</code></strong> (Total Deposits): Although the correlation with <code>BALCHQ</code> is moderate (0.41), we will drop <code>TOTDEP</code>. It creates redundancy and interpretation ambiguity in the regression because it is conceptually related to <code>BALCHQ</code> and <code>BALSAV</code>. * <strong><code>NINDINC1</code> and <code>numrr1</code></strong>: These variables have a very high correlation (r = 0.99). Retaining one robust income variable (e.g., <code>avginc1</code>) helps avoid instability, so we will drop both of these count measures. * <strong><code>avginv1</code></strong>: We drop this in favor of <code>avginc1</code> to simplify neighborhood wealth metrics. * <strong><code>gendm</code> and <code>gendf</code></strong>: These are perfectly negatively correlated (if one is 0, the other is 1). We should exclude one to avoid singularity.</p>
+<p><em>Decision</em>: We will drop <code>TOTDEP</code>, <code>NINDINC1</code>, <code>numrr1</code>, <code>avginv1</code>, and <code>gendm</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exclude variables derived from visual inspection of the matrix above</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (Assuming typical results: TOTDEP often redundant if individual balances exist)</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># For this script, we'll exclude TOTDEP and avginv1 to be safe/simple</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Dropping gendm to avoid perfect collinearity with gendf</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>vc_model_data <span class="ot">&lt;-</span> vc_clean <span class="sc">%&gt;%</span> </span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>TOTDEP, <span class="sc">-</span>avginv1, <span class="sc">-</span>gendm)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Use APURCH_bin as the target (0/1) to ensure compatibility with glm</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove original character APURCH from predictors</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>model_data <span class="ot">&lt;-</span> vc_model_data <span class="sc">%&gt;%</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>APURCH)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exclude variables derived from logic above</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Dropping TOTDEP (redundancy/ambiguity)</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Dropping NINDINC1/numrr1 (high correlation r=0.99)</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Dropping avginv1 (favor avginc1)</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Dropping gendm (perfect collinearity with gendf)</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>vc_model_data <span class="ot">&lt;-</span> vc_clean <span class="sc">%&gt;%</span> </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>TOTDEP, <span class="sc">-</span>avginv1, <span class="sc">-</span>gendm, <span class="sc">-</span>NINDINC1, <span class="sc">-</span>numrr1)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Use APURCH_bin as the target (0/1) to ensure compatibility with glm</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove original character APURCH from predictors</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>model_data <span class="ot">&lt;-</span> vc_model_data <span class="sc">%&gt;%</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>APURCH)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
